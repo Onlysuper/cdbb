@@ -1,0 +1,37 @@
+.rentdetail-page{
+
+}
+.rentdetail-page .container{
+    margin-top: .15rem;
+}
+.rentdetail-page .container .m-header{
+    border-radius: .05rem .05rem 0 0;
+    background: #FFE000;
+    height: .44rem;
+    line-height: .44rem;
+    color: #333333;
+    font-size: .16rem;
+    text-align: center; 
+}
+.rentdetail-page .container ul{
+    background: rgba(255,224,0,0.1);
+    padding: 0 .09rem;
+}
+.rentdetail-page .container li{
+    border-bottom: 1px dashed #FFE000;
+    height: .36rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .14rem;
+}
+.rentdetail-page .container li .label{
+    color: #333333;
+}
+.rentdetail-page .container li .content{
+    color: #666666;
+}
+.rentdetail-page .container li:last-child{
+    border: 0;
+}

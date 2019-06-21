@@ -1,0 +1,45 @@
+
+
+*{
+    margin:0;
+    padding: 0;
+    font-family:  PingFangSC-Regular;
+    -webkit-font-smoothing: antialiased;
+}
+
+html,body{
+    overflow-x: hidden;
+}
+/*375px布局*/
+html{font-size: 100px;}
+body{font-size: 0.14rem;/*实际相当于14px*/}
+ul,li{
+    list-style: none;
+}
+input,button,input:focus,button:focus{
+    outline: none;
+    border:none;
+    -webkit-appearance: none;
+ 
+}
+button{
+    font-weight: bold;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;
+}
+input{
+    background: transparent;
+    border: 0;
+    line-height: .4rem;
+    height: .4rem;
+}
+
+.page{
+    padding:0 .15rem
+}
+.no-more{
+    background: #f6f6f6;
+    color: #333333;
+    font-size: .14rem;
+    padding: .1rem 0
+}

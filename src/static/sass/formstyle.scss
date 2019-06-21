@@ -1,0 +1,64 @@
+.m-form-page{
+    margin-top: .2rem;
+}
+
+.form-row .label,.form-row .m-label{
+    font-size: .14rem;
+    color: #333333;
+    line-height: .14rem;
+    margin-top: .2rem;
+    font-weight: bold;
+}
+.form-row .item{
+    margin-top: .1rem;
+    display: flex;
+    flex-direction: row;
+    color: #333333;
+}
+.input-box{
+    background: #F6F6F6;
+    border-radius: 0.05rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    flex: 1;
+    padding: 0 .1rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start
+}
+.input-box.no-back{
+    background: transparent;
+}
+.form-row .item  .item-s{
+    height: 0.4rem;
+    line-height: 0.4rem;
+    flex: 0 0 1.2rem;
+    margin-left: .15rem;
+    text-align: center;
+}
+.back-but{
+    background: #FFE000;
+    font-size: .14rem;
+    color: #333333;
+    border:0;
+    font-weight: bold;
+    border-radius: .05rem;
+}
+.form-row .item input,.form-row .item input::placeholder{
+    color: #BDBDBD;
+    font-size: 0.14rem;
+}
+.form-row .item input{
+    width: 100%;
+    color: #333333;
+}
+
+.form-footer{
+    margin-top: .3rem;
+    display: flex;
+    height: .4rem;
+}
+.form-footer button{
+    flex: 1
+}
