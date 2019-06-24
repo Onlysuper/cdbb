@@ -51,7 +51,6 @@ export default {
   name: 'addcard',
   data(){
       return {
-        // card :this.$route.params.card,
         formData:{
           card:this.$route.params.card,// 卡号
           code:'',// 验证码
@@ -84,7 +83,7 @@ export default {
     },
     addPhone(){
       addPhone()({
-        ...formData
+        ...this.formData
       }).then(res=>{
         if(res.code==0){
           this.Toast("手机号添加成功！");

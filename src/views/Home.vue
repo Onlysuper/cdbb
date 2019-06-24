@@ -183,9 +183,9 @@ export default {
       async searchHandle(){
         let haveTrades = await this.haveTrades();
         if(haveTrades){
-        this.$router.push({ name: 'history', params: { 
-            card: this.searchVal
-        }})
+            this.$router.push({ name: 'history', params: { 
+                card: this.searchVal
+            }})
         }
       },
       // 查询并成为会员
@@ -221,7 +221,6 @@ export default {
                 card:card
             }).then(res=>{
                 if(res.code===0&&res.result){
-                    console.log('这里');
                     resolve(res.result)
                 }
             }).catch(err=>{

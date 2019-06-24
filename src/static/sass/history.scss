@@ -12,6 +12,7 @@
     background:  #f6f6f6;
     left: 0;
     right: 0;
+    z-index: 100;
 }
 .search-top-fixed .search-box{
     display: flex;
@@ -148,8 +149,9 @@
     position: relative;
     background: #fff;
 }
-.search-footer .m-button button{
+.search-footer .m-button button,.search-footer .m-button .button{
     font-size: .14rem;
+    position: relative;
 }
 .search-footer .split-line{
     /* position: absolute; */
@@ -161,9 +163,22 @@
     top: 0;
     z-index: 2;
 }
-.m-button button{
+.m-button button,.m-button .button{
     width: 100%;
     text-align: center;
     height: 100%;
     background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+.van-tab{
+    padding: 0;
 }

@@ -13,7 +13,17 @@
              最近的2次租用退还记录
           </div>
           <div class="search-tip-grop">
-            <div v-for="item in tips" :key="item.code" @click="searchHandle(item.code)" :class="['tip',{selected:dayTime==item.code?true:false}]">{{item.label}}</div>
+              <van-tabs title-active-color="#f6f6f6" background="#f6f6f6" :border='false' :ellipsis='false' :line-width='0'>
+               <van-tab v-for="item in tips" :key="item.code">
+                  <!-- {{item.label}} -->
+                    <div slot="title">
+                    <!-- <van-icon name="more-o" />选项 -->
+                    <div @click="searchHandle(item.code)" :class="['tip',{selected:dayTime==item.code?true:false}]">{{item.label}}</div>
+                    </div>
+                    <!-- 内容 {{ index }} -->
+                </van-tab>
+             </van-tabs>
+            <!-- <div v-for="item in tips" :key="item.code"  :class="['tip',{selected:dayTime==item.code?true:false}]">{{item.label}}</div> -->
           </div>
        </div>
        <div class="list-container">
@@ -148,15 +158,17 @@
        <div class="footer-place"></div>
        <div class="search-footer">
            <div class="m-button">
-                <button @click="addBankCard">添加銀行卡</button>
+                <button v-waves @click="addBankCard" class="button">
+                    添加銀行卡
+                </button>
            </div>
            <div class="split-line"></div>
            <div class="m-button">
-                <button @click="addPhone">添加手機號</button>
+                <button v-waves class="button" @click="addPhone">添加手機號</button>
            </div>
            <div class="split-line"></div>
           <div class="m-button">
-                <button @click="beVip">成為會員</button>
+                <button v-waves class="button" @click="beVip">成為會員</button>
           </div>
        </div>
     </div>
@@ -168,9 +180,11 @@
 
 
 <script>
+import waves from "@src/common/js/waves";
 import { getTrades,beVip,getWhichNumber } from "@src/apis";
 import InfiniteLoading from 'vue-infinite-loading';
 export default {
+  directives:{waves},
   name: 'history',
   components: {
       InfiniteLoading
@@ -185,7 +199,11 @@ export default {
         infiniteId: +new Date(),
         tips:[
         {
-            label:'最近七天',
+            label:'全部',
+            code:''
+        },
+        {
+            label:'最近7天',
             code:'7'
         },
         {
@@ -204,6 +222,9 @@ export default {
       }
   },
   methods:{
+      tipChange(ev){
+          console.log(ev);
+      },
       //如果有退还记录才可以进行接下来的操作
       haveTrades(){
         let searchVal=this.card;
@@ -314,12 +335,12 @@ export default {
       detailHandle(obj){
           if(obj.preturnTime){
               // 退还详情
-            this.$router.push({ name: 'history', params: { 
+            this.$router.push({ name: 'backdetail', params: { 
                 card: obj.porderID 
             }})
           }else{
               // 租用详情
-            this.$router.push({ name: 'history', params: { 
+            this.$router.push({ name: 'rentdetail', params: { 
                 card: obj.porderID 
             }})
           }

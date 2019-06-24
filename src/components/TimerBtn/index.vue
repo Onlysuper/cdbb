@@ -7,13 +7,15 @@
 -->
 
 <template>
-          <button class="back-but item-s" :class="{'timer-btn-active':timerBtnActiveClass}" @click="handleClick" @touchstart="timerBtnActiveClass = true" @touchend="timerBtnActiveClass = false" :disabled="disabled">
+          <button v-waves class="back-but item-s" :class="{'timer-btn-active':timerBtnActiveClass}" @click="handleClick" @touchstart="timerBtnActiveClass = true" @touchend="timerBtnActiveClass = false" :disabled="disabled">
                     {{s}}
           </button>
 </template>
 
 <script>
+import waves from "@src/common/js/waves";
 export default {
+  directives:{waves},
   data() {
     return {
       disabled: false, //默认不disabled
