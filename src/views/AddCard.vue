@@ -20,12 +20,12 @@
             </div>
             <div class="form-row">
                 <div class="label">有效期及CVV号</div>
-                <div class="item">
+                 <div class="item">
                      <div class="input-box">
-                          <input type="tel" placeholder="月/年（如0623）">
+                         <van-field clearable v-model="formData.validityDate"  type="tel" placeholder="月/年（如0623）" />
                      </div>
                       <div class="input-box item-s">
-                           <input class="" type="tel" placeholder="卡背面CVV号">
+                           <van-field clearable v-model="formData.cvv"  type="tel" placeholder="卡背面CVV号" />
                      </div>
                 </div>
             </div>
@@ -50,10 +50,12 @@ export default {
        return {
             formData:{
                 card:this.$route.params.card,// 查询的卡号或者手机号
-                code:'',// 验证码
-                hasPhone:'',// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
+                // code:'',// 验证码
+                hasPhone:this.$route.params.hasPhone,// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
                 newCard:'',// 新添加的银行卡卡号
-                phone:this.$route.params.phone// 手机号码或者邮箱
+                phone:this.$route.params.phone,// 手机号码或者邮箱
+                validityDate:'',// 银行卡有效期
+                cvv:'' //卡背面CVV号
             } 
         }
     },
@@ -63,7 +65,7 @@ export default {
     methods:{
         addCard(){
             addCard()({
-                ...formData
+                ...this.formData
             }).then(res=>{
                 if(res.code==0){
 

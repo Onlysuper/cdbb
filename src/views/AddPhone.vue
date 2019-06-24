@@ -45,6 +45,7 @@ import waves from "@src/common/js/waves";
 import validator from "@src/common/js/validator.js"
 import { getCheckCode,addPhone } from "@src/apis";
 import TimerBtn from "@src/components/TimerBtn"
+import { setTimeout } from 'timers';
 export default {
   directives:{waves},
   name: 'addcard',
@@ -86,6 +87,10 @@ export default {
       }).then(res=>{
         if(res.code==0){
           this.Toast("手机号添加成功！");
+          setTimeout(()=>{
+             this.$router.replace({ name: 'history', params: { 
+             }})
+          },2000)
         }
       })
     }
