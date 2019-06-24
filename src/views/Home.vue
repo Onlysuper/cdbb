@@ -159,7 +159,6 @@
 
 
 <script>
-import "@src/common/js/button.js"
 import { getTrades,beVip } from "@src/apis";
 import waves from "@src/common/js/waves";
 export default {
