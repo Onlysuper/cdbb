@@ -37,7 +37,7 @@
                 </li>
                 <li>
                     <div class="label">退還機櫃號</div>
-                    <div class="content">{{}}</div>
+                    <div class="content">{{details.pGhdeviceId}}</div>
                 </li>
                 <li>
                     <div class="label">送電寶寶編號</div>
@@ -45,27 +45,27 @@
                 </li>
                 <li>
                     <div class="label">終端編號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.terminalNo}}</div>
                 </li>
                 <li>
                     <div class="label">操作員號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.pServiceCode}}</div>
                 </li>
                 <li>
                     <div class="label">批次號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.batchNo}}</div>
                 </li>
                 <li>
                     <div class="label">憑證號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.voucherNo}}</div>
                 </li>  
                 <li>
                     <div class="label">授權號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.pApprovalCode}}</div>
                 </li>    
                 <li>
                     <div class="label">交易參考號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.transactionNo}}</div>
                 </li>    
             </ul>
        </div>
@@ -91,7 +91,9 @@ export default {
       getDetail()({
           orderId:this.orderId
       }).then(res=>{
-
+          if(res.code==0){
+              this.details=res.buyDetail
+          }
       })
   },
   components: {

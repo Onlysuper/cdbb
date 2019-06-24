@@ -35,33 +35,34 @@
                     <div class="label">租用時間</div>
                     <div class="content">{{details.pborrowTime}}</div>
                 </li>
+                <!-- 以下为新增数据 -->
                 <li>
                     <div class="label">商戶編號</div>
-                    <div class="content">{{}}</div>
+                    <div class="content">{{details.customerNo}}</div>
                 </li>
                 <li>
                     <div class="label">終端編號</div>
-                    <div class="content">{{}}</div>
+                    <div class="content">{{details.terminalNo}}</div>
                 </li>
                 <li>
                     <div class="label">操作員號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.pServiceCode}}</div>
                 </li>
                 <li>
                     <div class="label">批次號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.batchNo}}</div>
                 </li>
                 <li>
                     <div class="label">憑證號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.voucherNo}}</div>
                 </li>
                 <li>
                     <div class="label">授權碼</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.pApprovalCode}}</div>
                 </li>
                 <li>
                     <div class="label">交易參考號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.transactionNo}}</div>
                 </li>    
             </ul>
        </div>
@@ -80,7 +81,6 @@ export default {
   data(){
       return {
           orderId:this.$route.params.orderId+'',
-        //   isBack:this.$route.params.isBack, // 是否要查看退还详情
           details:{}
       }
   },
@@ -88,7 +88,9 @@ export default {
       getDetail()({
           orderId:this.orderId
       }).then(res=>{
-
+          if(res.code==0){
+              this.details=res.buyDetail
+          }
       })
   },
   components: {

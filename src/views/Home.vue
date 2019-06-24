@@ -153,11 +153,6 @@
         line-height: 1;
         font-weight: bold;
     }
-    // button{
-    // position: relative;
-    //   -webkit-appearance: none;
-    //  -webkit-text-size-adjust: 100%;
-    // }
 }
 
 </style>
