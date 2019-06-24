@@ -193,7 +193,7 @@ export default {
       return {
         dayTime:'',
         // card :this.$route.params.card,
-        card :6225768616893580,
+        card :'',
         page: 1,
         list: [],
         infiniteId: +new Date(),
@@ -314,12 +314,13 @@ export default {
       },
       // 成为会员
      async beVip(){
-            let _this = this;
-            let searchVal=this.card;
+          let _this = this;
+          let card = this.card;
+          if(card){
+            let haveTrades = await this.haveTrades();
             let getWhichNumber = await this.getWhichNumber();
             let whichNumber = getWhichNumber.card!=getWhichNumber.phone?'卡号':'手机号';
-            let haveTrades = await this.haveTrades();// 是否有退还记录
-            if(haveTrades){
+            if(haveTrades){ // 有退还记录的才会有接下来的操作
                 if(!haveTrades.tradeList.member){
                     // 没有注册过会员的可注册会员,注册过的就不用了
                     await beVip()({
@@ -329,6 +330,9 @@ export default {
                 }
                 this.$toast(`该${whichNumber}已注册为会员`);
             }
+          }else{
+            _this.$toast('请先输入搜索关键字');
+          }
       },
       // 查看详情
       detailHandle(obj){
@@ -349,7 +353,7 @@ export default {
         infiniteHandler($state) {
             if($state){
                 this.getTradesHandle().then(data=>{
-                        console.log(data);
+                        // console.log(data);
                         //  分页效果
                         // if (data.length>0) { 
                         //     this.page += 1;
@@ -374,11 +378,11 @@ export default {
                 sendData['dayTime']=this.dayTime+'';
             }
            return await getTrades()(sendData).then(res=>{
-                console.log(res);
+                // console.log(res);
                 if(res.code==0){
                     let data = res.tradeList.buyLists;
                     let sendData = (data&&data.length>0)?[...data]:[];
-                    console.log(sendData);
+                    // console.log(sendData);
                     return Promise.resolve(
                         sendData
                     )
