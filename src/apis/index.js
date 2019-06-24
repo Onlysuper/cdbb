@@ -5,18 +5,27 @@ const getTrades = ()=>{return (data)=>{return http.getJson(baseUrl,'/trade/list'
 // 成为会员
 const beVip =()=>{return (data)=>{return http.getJson(baseUrl,'/trade/addMember',data)}}
 
+// 发送短信验证码
+const getCheckCode= ()=>{return (data)=>{return http.getJson(baseUrl,'/sms/send',data)}}
+
+// 判断搜索的内容是手机号还是银行卡号 还是已经存在的手机号
+const getWhichNumber= ()=>{return (data)=>{return http.getJson(baseUrl,'/trade/checkCard',data)}}
+
 // 添加手机号
 const addPhone =()=>{return (data)=>{return http.getJson(baseUrl,'/trade/addPhone',data)}}
 
 // 添加银行卡
 const addCard =()=>{return (data)=>{return http.postJson(baseUrl,'/trade/addBank',data)}}
 
-// 发送短信验证码
-const getCheckCode= ()=>{return (data)=>{return http.postJson(baseUrl,'/sms/send',data)}}
+// 查看详情
+const getDetail =()=>{return (data)=>{return http.getJson(baseUrl,'/trade/getBuyDetail',data)}}
+
 export {
     getTrades,
     beVip,
     addPhone,
     addCard,
-    getCheckCode
+    getCheckCode,
+    getWhichNumber,
+    getDetail
 }

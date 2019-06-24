@@ -5,7 +5,10 @@ import store from './store'
 // import Vant from 'vant';
 import 'vant/lib/index.css';
 import { Toast } from 'vant'
+import { Field } from 'vant';
+
 // Vue.use(Vant);
+Vue.use(Field);
 Vue.use(Toast);
 
 

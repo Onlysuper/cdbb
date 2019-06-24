@@ -5,7 +5,7 @@
                 <div class="m-label">查詢銀行卡號</div>
                 <div class="item">
                     <div class="input-box no-back">
-                       6216********0236
+                       {{formData.card}}
                     </div>
                 </div>
             </div>
@@ -14,7 +14,8 @@
                 <div class="label">手機號</div>
                 <div class="item">
                      <div class="input-box">
-                        <input type="tel" v-model="phone" placeholder="請輸入手機號">
+                        <van-field ref="phone" clearable v-model="formData.phone"  type="number" placeholder="請輸入手機號" />
+                        <!-- <input type="tel" v-model="phone" placeholder="請輸入手機號"> -->
                      </div>
                 </div>
             </div>
@@ -22,13 +23,15 @@
                 <div class="label">驗證碼</div>
                 <div class="item">
                     <div class="input-box">
-                         <input type="tel" placeholder="請輸入驗證碼">
+                         <!-- <input type="tel" placeholder="請輸入驗證碼"> -->
+                          <van-field ref="tel" clearable v-model="formData.code"  type="number" placeholder="請輸入驗證碼" />
                     </div>
+                    
                    <TimerBtn ref="TimerBtn" :text="'獲取驗證碼'" :time="60" :cb="sendCode"></TimerBtn>
                 </div>
             </div>
             <div class="form-footer">
-                <button class="back-but">添加手機號</button>
+                <button @click="addPhone" class="back-but">添加手機號</button>
             </div>
         </div>
     </div>
@@ -40,6 +43,7 @@
 
 
 <script>
+import validator from "@src/common/js/validator.js"
 import { getCheckCode,addPhone } from "@src/apis";
 import TimerBtn from "@src/components/TimerBtn"
 // @ is an alias to /src
@@ -47,7 +51,12 @@ export default {
   name: 'addcard',
   data(){
       return {
-          phone:''
+        // card :this.$route.params.card,
+        formData:{
+          card:this.$route.params.card,// 卡号
+          code:'',// 验证码
+          phone:''// 手机号码或者邮箱
+        } 
       }
   },
   components: {
@@ -56,15 +65,13 @@ export default {
   methods:{
        // 发送短信验证码
     sendCode() {
-        this.$refs.TimerBtn.timer();
-    //   if (this.isPhone) {
-    //     this.Toast("请输入正确手机号码!");
-    //     $(this.$refs.phone).focus();
-    //     return;
-    //   }
-    //   let phone = this.$refs.phone.value.trim();
+      if (!(validator.phoneNumber.test(this.formData.phone))) {
+        this.$toast("请输入正确手机号码!");
+        return false;
+      }
+      this.$refs.TimerBtn.timer();
       getCheckCode()({ 
-         phone:this.phone
+         phone:this.formData.phone
       }).then(res => {
         this.$refs.TimerBtn.disabled = true;
         this.$refs.TimerBtn.timer();
@@ -75,6 +82,15 @@ export default {
         }
       });
     },
+    addPhone(){
+      addPhone()({
+        ...formData
+      }).then(res=>{
+        if(res.code==0){
+          this.Toast("手机号添加成功！");
+        }
+      })
+    }
   }
 }
 </script>

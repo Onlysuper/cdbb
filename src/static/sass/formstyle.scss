@@ -27,6 +27,10 @@
     align-items: center;
     justify-content: flex-start
 }
+.input-box .van-cell{
+    padding: 0;
+    background: transparent;
+}
 .input-box.no-back{
     background: transparent;
 }

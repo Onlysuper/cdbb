@@ -17,7 +17,7 @@ axios.interceptors.response.use(function (response) {
         }else{
             Toast({
                 message:_data.msg,
-                duration:1000
+                duration:3000
             });
             return Promise.reject({
                 code: _data.code,

@@ -5,39 +5,43 @@
             <ul>
                 <li>
                     <div class="label">押金金額</div>
-                    <div class="content"></div>
+                    <div class="content">
+                        {{details.ppriceYajin}}
+                    </div>
                 </li>
                 <li>
                     <div class="label">電話號碼</div>
-                    <div class="content"></div>
+                    <div class="content">
+                        {{details.pphone}}
+                    </div>
                 </li>
                 <li>
                     <div class="label">唯一查詢號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.popenID || details.pphone}}</div>
                 </li>
                 <li>
                     <div class="label">機櫃編碼</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.pdeviceID}}</div>
                 </li>
                 <li>
                     <div class="label">送電寶寶編號</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.pbatteryID}}</div>
                 </li>
                 <li>
                     <div class="label">租金單價</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.pprice}}</div>
                 </li>
                 <li>
                     <div class="label">租用時間</div>
-                    <div class="content"></div>
+                    <div class="content">{{details.pborrowTime}}</div>
                 </li>
                 <li>
                     <div class="label">商戶編號</div>
-                    <div class="content"></div>
+                    <div class="content">{{}}</div>
                 </li>
                 <li>
                     <div class="label">終端編號</div>
-                    <div class="content"></div>
+                    <div class="content">{{}}</div>
                 </li>
                 <li>
                     <div class="label">操作員號</div>
@@ -70,9 +74,23 @@
 
 
 <script>
-// @ is an alias to /src
+import { getDetail } from "@src/apis";
 export default {
   name: 'rentdetail',
+  data(){
+      return {
+          orderId:this.$route.params.orderId+'',
+        //   isBack:this.$route.params.isBack, // 是否要查看退还详情
+          details:{}
+      }
+  },
+  created(){
+      getDetail()({
+          orderId:this.orderId
+      }).then(res=>{
+
+      })
+  },
   components: {
   }
 }

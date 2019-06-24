@@ -18,7 +18,8 @@
                     銀行卡號/手機號
                 </div>
                 <div class="item">
-                    <input  v-model="searchVal" type="email" placeholder="请输入用于租用的卡号或是手机号">
+                    <van-field clearable v-model="searchVal"  type="number" placeholder="请输入用于租用的卡号或是手机号" />
+                    <!-- <input  v-model="searchVal" type="number" placeholder="请输入用于租用的卡号或是手机号"> -->
                 </div>
             </div>
             <div class="operation-box">
@@ -42,7 +43,7 @@
             </div>
         </div>
         <div class="copy-code">
-            ©  POWER PAY LIMITED
+            ©  ULTRA STRONG INVESTMENTS LIMITED
         </div>
     </div>
   <!-- </div> -->
@@ -79,17 +80,21 @@
     .search-form{
         margin-top: .2rem;
     }
-    .form-row .item{
+    .form-row .item,.form-row .van-cell{
         background: #F6F6F6;
         line-height: .4rem;
         height: .4rem;
         margin-top: .1rem;
+        padding: 0 .1rem;
     }
-    .form-row .item input{
+    .form-row .van-cell{
+        margin-top: 0;
+    }
+    .form-row .item input, .form-row .van-cell input{
         width: 100%;
         background: transparent;
         outline: none;
-        padding:0 .1rem;
+        // padding:0 .1rem;
         font-size: .14rem;
     }
     .operation-box{
@@ -159,8 +164,10 @@
 
 
 <script>
-import { getTrades,beVip } from "@src/apis";
+import { getTrades,beVip,getWhichNumber } from "@src/apis";
 import waves from "@src/common/js/waves";
+import storage from "@src/common/js/storage";
+import { setTimeout, clearTimeout } from 'timers';
 export default {
   directives:{waves},
   name: 'home',
@@ -174,45 +181,78 @@ export default {
   methods:{
       // 查询
       async searchHandle(){
-          console.log('zzzz');
         let haveTrades = await this.haveTrades();
-         if(haveTrades){
-            this.$router.push({ name: 'history', params: { 
-                card: this.searchVal
-            }})
-         }
+        if(haveTrades){
+        this.$router.push({ name: 'history', params: { 
+            card: this.searchVal
+        }})
+        }
       },
       // 查询并成为会员
       async searchBeVip(){
-          let searchVal=this.searchVal;
-          let haveTrades = await this.haveTrades();// 是否有退还记录
-          if(haveTrades){
-              beVip()({
-                  card:searchVal,
-                  membership:true
-              }).then(res=>{
+        let _this = this;
+        let getWhichNumber = await this.getWhichNumber();
+        let isPhone = false;
+        if(getWhichNumber.card!=getWhichNumber.phone){
+            // 查询的是卡号
+            isPhone=false;
+        }else{
+            // 查询的是手机号
+            isPhone=true;
+        }
+        let searchVal=this.searchVal;
+        let haveTrades = await this.haveTrades();// 是否有退还记录
+        if(haveTrades){
+            if(haveTrades.tradeList.member){
+                // 已经注册过会员
+                // this.$toast(`该${isPhone?'手机号码':'银行卡号'}已是会员`);
+            }else{
+                // 注册会员
+                await beVip()({
+                    card:searchVal,
+                    membership:true
+                })
+                //  this.$toast(`该${isPhone?'手机号码':'银行卡号'}已成功注册为会员`);
+            }
+            // let _time = setTimeout(()=>{
+                // clearTimeout(_time)
                 this.$router.push({ name: 'history', params: { 
                     card: this.searchVal 
                 }})
-              })
-          }
+            // },2000)
+
+        }
+
       },
-      //如果有退还记录才可以成为会员
+       // 检测输入的是手机号还是银行卡
+      async getWhichNumber(){
+        let card = this.searchVal;
+        return new Promise(function(resolve, reject){
+            getWhichNumber()({
+                card:card
+            }).then(res=>{
+                if(res.code===0&&res.result){
+                    console.log('这里');
+                    resolve(res.result)
+                }
+            }).catch(err=>{
+                resolve(false)
+            })
+        });
+      },
+      //如果有退还记录才可以进行接下来的操作
       haveTrades(){
         let searchVal=this.searchVal;
         return new Promise(function(resolve, reject){
             getTrades()({
                 card:searchVal
             }).then(res=>{
-                console.log(res);
                 let data = res.tradeList.buyLists;
                 if(data&&data.length>0){
-                    console.log('有记录啊');
-                    resolve(data)
+                    resolve(res);
                 }
             }).catch(err=>{
                 resolve(false);
-                // reject(err)
             })
          });
       }
