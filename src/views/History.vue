@@ -293,21 +293,25 @@ export default {
         });
       },
       // 成为会员
-      beVip(){
-          beVip()({
-              card:this.card
-          }).then(res=>{
-              console.log(res);
-          })
+     async beVip(){
+            let _this = this;
+            let searchVal=this.card;
+            let getWhichNumber = await this.getWhichNumber();
+            let whichNumber = getWhichNumber.card!=getWhichNumber.phone?'卡号':'手机号';
+            let haveTrades = await this.haveTrades();// 是否有退还记录
+            if(haveTrades){
+                if(!haveTrades.tradeList.member){
+                    // 没有注册过会员的可注册会员,注册过的就不用了
+                    await beVip()({
+                        card:searchVal,
+                        membership:true
+                    })
+                }
+                this.$toast(`该${whichNumber}已注册为会员`);
+            }
       },
       // 查看详情
       detailHandle(obj){
-            // this.$router.push({ name: 'rentdetail', params: { 
-            //     orderId: obj.porderID,
-            //     isBack:obj.preturnTime?true:false
-            // }})
-        //   console.log(orderid)
-        //   porderID:item.porderID,preturnTime:item.preturnTime
           if(obj.preturnTime){
               // 退还详情
             this.$router.push({ name: 'history', params: { 

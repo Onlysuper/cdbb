@@ -192,35 +192,24 @@ export default {
       async searchBeVip(){
         let _this = this;
         let getWhichNumber = await this.getWhichNumber();
-        let isPhone = false;
-        if(getWhichNumber.card!=getWhichNumber.phone){
-            // 查询的是卡号
-            isPhone=false;
-        }else{
-            // 查询的是手机号
-            isPhone=true;
-        }
+        let whichNumber = getWhichNumber.card!=getWhichNumber.phone?'卡号':'手机号';
         let searchVal=this.searchVal;
         let haveTrades = await this.haveTrades();// 是否有退还记录
         if(haveTrades){
-            if(haveTrades.tradeList.member){
-                // 已经注册过会员
-                // this.$toast(`该${isPhone?'手机号码':'银行卡号'}已是会员`);
-            }else{
-                // 注册会员
+            if(!haveTrades.tradeList.member){
+                 // 没有注册过会员的可注册会员,注册过的就不用了
                 await beVip()({
                     card:searchVal,
                     membership:true
                 })
-                //  this.$toast(`该${isPhone?'手机号码':'银行卡号'}已成功注册为会员`);
             }
-            // let _time = setTimeout(()=>{
-                // clearTimeout(_time)
+            this.$toast(`该${whichNumber}已成功注册为会员`);
+            let _time = setTimeout(()=>{
+                clearTimeout(_time)
                 this.$router.push({ name: 'history', params: { 
                     card: this.searchVal 
                 }})
-            // },2000)
-
+            },2000)
         }
 
       },
