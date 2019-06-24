@@ -2,7 +2,7 @@
   <div class="page history-page">
        <div class="search-top-fixed search-top">
             <div class="search-box">
-                <input v-model="searchVal" type="text" placeholder="请输入用于租用的手机号/银行卡号进行查询">
+                <input v-model="card" type="text" placeholder="请输入用于租用的手机号/银行卡号进行查询">
                 <img @click="searchHandle()" class="icon" src="../static/img/icon_search@3x.png" alt="">
             </div>
        </div>
@@ -12,10 +12,7 @@
              最近的2次租用退还记录
           </div>
           <div class="search-tip-grop">
-            <div @click="searchHandle('7')" class="tip">最近七天</div>
-            <div @click="searchHandle('30')" class="tip">最近1个月</div>
-            <div @click="searchHandle('60')" class="tip">最近2个月</div>
-            <div @click="searchHandle('90')" class="tip">最近3个月</div>
+            <div v-for="item in tips" :key="item.code" @click="searchHandle(item.code)" :class="['tip',{selected:dayTime==item.code?true:false}]">{{item.label}}</div>
           </div>
        </div>
        <div class="list-container">
@@ -180,10 +177,28 @@ export default {
   data(){
       return {
         dayTime:'',
-        searchVal :this.$route.params.searchVal,
+        card :this.$route.params.card,
         page: 1,
         list: [],
         infiniteId: +new Date(),
+        tips:[
+        {
+            label:'最近七天',
+            code:'7'
+        },
+        {
+            label:'最近1个月',
+            code:'30'
+        },
+        {
+            label:'最近2个月',
+            code:'60'
+        },
+        {
+            label:'最近3个月',
+            code:'90'
+        },
+        ]
       }
   },
   methods:{
@@ -202,7 +217,7 @@ export default {
       // 成为会员
       beVip(){
           beVip()({
-              card:this.searchVal
+              card:this.card
           }).then(res=>{
               console.log(res);
           })
@@ -211,7 +226,7 @@ export default {
       detailHandle(orderid){
           console.log(orderid)
           this.$router.push({ name: 'history', params: { 
-              searchVal: this.searchVal 
+              card: this.card 
           }})
       },
       // 加载数据
@@ -236,11 +251,13 @@ export default {
             }
         },
         async getTradesHandle(){
-            let sendData ={};
+            let sendData ={
+                card:this.card
+            };
             if(this.dayTime){
                 sendData['dayTime']=this.dayTime+'';
             }
-           return await getTrades(this.searchVal||undefined)(sendData).then(res=>{
+           return await getTrades()(sendData).then(res=>{
                 console.log(res);
                 if(res.code==0){
                     let data = res.tradeList.buyLists;

@@ -1,7 +1,7 @@
 import http from "./http";
 const baseUrl = "http://power.xmfstore.com/power"
 // 退还记录查询
-const getTrades = (path)=>{return (data)=>{return http.getJson(baseUrl,'/trade/list/'+path,data)}}
+const getTrades = ()=>{return (data)=>{return http.getJson(baseUrl,'/trade/list',data)}}
 // 成为会员
 const beVip =()=>{return (data)=>{return http.getJson(baseUrl,'/trade/addMember',data)}}
 

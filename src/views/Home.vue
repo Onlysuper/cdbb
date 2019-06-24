@@ -174,41 +174,47 @@ export default {
   methods:{
       // 查询
       async searchHandle(){
+          console.log('zzzz');
         let haveTrades = await this.haveTrades();
          if(haveTrades){
             this.$router.push({ name: 'history', params: { 
-                searchVal: this.searchVal 
+                card: this.searchVal
             }})
          }
-      },
-      async haveTrades(){
-        let searchVal=this.searchVal;
-        new Promise(function(resolve, reject){
-            getTrades()({
-                card:searchVal
-            }).then(res=>{
-                let data = res.tradeList.buyLists;
-                if(data&&data.length>0){
-                    resolve(data)
-                }
-            }).catch(err=>{
-                reject(false)
-            })
-         });
       },
       // 查询并成为会员
       async searchBeVip(){
           let searchVal=this.searchVal;
-          let haveTrades = await this.haveTrades();
+          let haveTrades = await this.haveTrades();// 是否有退还记录
           if(haveTrades){
               beVip()({
-                  card:searchVal
+                  card:searchVal,
+                  membership:true
               }).then(res=>{
                 this.$router.push({ name: 'history', params: { 
-                    searchVal: this.searchVal 
+                    card: this.searchVal 
                 }})
               })
           }
+      },
+      //如果有退还记录才可以成为会员
+      haveTrades(){
+        let searchVal=this.searchVal;
+        return new Promise(function(resolve, reject){
+            getTrades()({
+                card:searchVal
+            }).then(res=>{
+                console.log(res);
+                let data = res.tradeList.buyLists;
+                if(data&&data.length>0){
+                    console.log('有记录啊');
+                    resolve(data)
+                }
+            }).catch(err=>{
+                resolve(false);
+                // reject(err)
+            })
+         });
       }
   }
 }
