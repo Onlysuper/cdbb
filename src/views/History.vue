@@ -307,7 +307,6 @@ export default {
                 card:card
             }).then(res=>{
                 if(res.code===0&&res.result){
-                    console.log('这里');
                     resolve(res.result)
                 }
             })

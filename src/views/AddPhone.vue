@@ -14,8 +14,7 @@
                 <div class="label">手機號</div>
                 <div class="item">
                      <div class="input-box">
-                        <van-field ref="phone" clearable v-model="formData.phone"  type="number" placeholder="請輸入手機號" />
-                        <!-- <input type="tel" v-model="phone" placeholder="請輸入手機號"> -->
+                        <van-field ref="phone" clearable v-model="formData.phone"  type="tel" placeholder="請輸入手機號" />
                      </div>
                 </div>
             </div>
@@ -24,7 +23,7 @@
                 <div class="item">
                     <div class="input-box">
                          <!-- <input type="tel" placeholder="請輸入驗證碼"> -->
-                          <van-field ref="tel" clearable v-model="formData.code"  type="number" placeholder="請輸入驗證碼" />
+                          <van-field ref="tel" clearable v-model="formData.code"  type="tel" placeholder="請輸入驗證碼" />
                     </div>
                    <TimerBtn ref="TimerBtn" :text="'獲取驗證碼'" :time="60" :cb="sendCode"></TimerBtn>
                 </div>

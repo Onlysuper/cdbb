@@ -14,8 +14,7 @@
                 <div class="label">銀行卡號</div>
                 <div class="item">
                      <div class="input-box">
-                         <van-field clearable v-model="formData.newCard"  type="number" placeholder="請輸入銀行卡號" />
-                        <!-- <input type="tel" placeholder="請輸入銀行卡號"> -->
+                         <van-field clearable v-model="formData.newCard"  type="tel" placeholder="請輸入銀行卡號" />
                      </div>
                 </div>
             </div>
@@ -43,13 +42,14 @@
 
 
 <script>
+import { addCard } from "@src/apis";
 import waves from "@src/common/js/waves";
 export default {
     directives:{waves},
     data(){
        return {
             formData:{
-                card:'',// 查询的卡号或者手机号
+                card:this.$route.params.card,// 查询的卡号或者手机号
                 code:'',// 验证码
                 hasPhone:'',// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
                 newCard:'',// 新添加的银行卡卡号
@@ -59,6 +59,17 @@ export default {
     },
     name: 'addcard',
     components: {
+    },
+    methods:{
+        addCard(){
+            addCard()({
+                ...formData
+            }).then(res=>{
+                if(res.code==0){
+
+                }
+            })
+        }
     }
 }
 </script>

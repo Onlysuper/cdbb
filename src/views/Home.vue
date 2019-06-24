@@ -18,7 +18,7 @@
                     銀行卡號/手機號
                 </div>
                 <div class="item">
-                    <van-field clearable v-model="searchVal"  type="number" placeholder="请输入用于租用的卡号或是手机号" />
+                    <van-field clearable v-model="searchVal"  type="tel" placeholder="请输入用于租用的卡号或是手机号" />
                     <!-- <input  v-model="searchVal" type="number" placeholder="请输入用于租用的卡号或是手机号"> -->
                 </div>
             </div>

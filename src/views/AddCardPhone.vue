@@ -5,7 +5,7 @@
                 <div class="m-label">手機號/郵箱</div>
                 <div class="item">
                     <div class="input-box">
-                          <van-field ref="phone" clearable v-model="formData.phone"  type="number" placeholder="请输入手机号/电邮作为查询号" />
+                          <van-field ref="phone" clearable v-model="formData.phone"  type="text" placeholder="请输入手机号/电邮作为查询号" />
                     </div>
                 </div>
             </div>
@@ -13,7 +13,7 @@
                 <div class="label">驗證碼</div>
                 <div class="item">
                     <div class="input-box">
-                         <van-field clearable v-model="formData.code"  type="number" placeholder="請輸入驗證碼" />
+                         <van-field clearable v-model="formData.code"  type="tel" placeholder="請輸入驗證碼" />
                     </div>
                     <TimerBtn ref="TimerBtn" :text="'獲取驗證碼'" :time="60" :cb="sendCode"></TimerBtn>
                 </div>
@@ -22,7 +22,7 @@
                 <div class="label">銀行卡號</div>
                 <div class="item">
                      <div class="input-box">
-                        <van-field clearable v-model="formData.newCard"  type="number" placeholder="請輸入銀行卡號" />
+                        <van-field clearable v-model="formData.newCard"  type="tel" placeholder="請輸入銀行卡號" />
                      </div>
                 </div>
             </div>
@@ -30,10 +30,12 @@
                 <div class="label">有效期及CVV号</div>
                 <div class="item">
                      <div class="input-box">
-                          <input type="tel" placeholder="月/年（如0623）">
+                         <van-field clearable v-model="formData.validityDate"  type="tel" placeholder="月/年（如0623）" />
+                          <!-- <input type="tel" placeholder="月/年（如0623）"> -->
                      </div>
                       <div class="input-box item-s">
-                           <input class="" type="tel" placeholder="卡背面CVV号">
+                           <van-field clearable v-model="formData.cvv"  type="tel" placeholder="卡背面CVV号" />
+                           <!-- <input class="" type="tel" placeholder="卡背面CVV号"> -->
                      </div>
                 </div>
             </div>
@@ -59,13 +61,14 @@ export default {
   name: 'addcardphone',
   data(){
     return {
-      card :this.$route.params.card,
       formData:{
-        card:'',// 查询的卡号或者手机号
+        card:this.$route.params.card,// 查询的卡号或者手机号
         code:'',// 验证码
         hasPhone:'',// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
         newCard:'',// 新添加的银行卡卡号
-        phone:''// 手机号码或者邮箱
+        phone:'',// 手机号码或者邮箱
+        validityDate:'',// 银行卡有效期
+        cvv:'' //卡背面CVV号
       } 
     }
   },
