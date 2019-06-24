@@ -147,7 +147,7 @@
     height: .49rem;
     line-height: 1;
     position: relative;
-    background: #fff;
+    background:transparent;
 }
 .search-footer .m-button button,.search-footer .m-button .button{
     font-size: .14rem;
@@ -167,7 +167,7 @@
     width: 100%;
     text-align: center;
     height: 100%;
-    background: #fff;
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -181,4 +181,17 @@
 }
 .van-tab{
     padding: 0;
+}
+.vip-tip{
+    background: url(../img/pic_qipao@3x.png) center no-repeat;
+    position: fixed;
+    bottom: .52rem;
+    right: .13rem;
+    height: .28rem;
+    width: 1rem;
+    background-size: cover;
+    font-size: .12rem;
+    color: #fff;
+    text-align: center;
+    line-height: .28rem;
 }
