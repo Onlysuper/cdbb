@@ -22,8 +22,8 @@
                 </div>
             </div>
             <div class="operation-box">
-                <button @click="searchHandle" class="border-but">查詢</button>
-                <button @click="searchBeVip" class="back-but">查詢並成為會員</button>
+                <button v-waves @click="searchHandle" class="border-but">查詢</button>
+                <button v-waves @click="searchBeVip" class="back-but">查詢並成為會員</button>
             </div>
             <div class="tip">成為會員可免費租用一周</div>
         </div>
@@ -107,19 +107,8 @@
         font-size: .12rem;
         font-weight: bold;
     }
-    .operation-box button:hover{
-        opacity: 0.6;
-    }
-    .border-but{
-        box-sizing: border-box;
-        border:2px solid #FFE000;
-        background:rgba(255,224,0,0.2);
-        position: relative;
-    }
-    .back-but{
-        border:rgba(255,224,0,0.2) 2px solid;
-        background: #FFE000 
-    }
+
+
     .operation-box .border-but{
         flex: 0 0 1.3rem;
     }
@@ -159,14 +148,22 @@
         line-height: 1;
         font-weight: bold;
     }
+    // button{
+    // position: relative;
+    //   -webkit-appearance: none;
+    //  -webkit-text-size-adjust: 100%;
+    // }
 }
 
 </style>
 
 
 <script>
+import "@src/common/js/button.js"
 import { getTrades,beVip } from "@src/apis";
+import waves from "@src/common/js/waves";
 export default {
+  directives:{waves},
   name: 'home',
   data(){
       return {
@@ -178,12 +175,12 @@ export default {
   methods:{
       // 查询
       async searchHandle(){
-        //  let haveTrades = await this.haveTrades();
-        //  if(haveTrades){
+        let haveTrades = await this.haveTrades();
+         if(haveTrades){
             this.$router.push({ name: 'history', params: { 
                 searchVal: this.searchVal 
             }})
-        //  }
+         }
       },
       async haveTrades(){
         let searchVal=this.searchVal;

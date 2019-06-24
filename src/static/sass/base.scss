@@ -7,8 +7,23 @@
     -webkit-font-smoothing: antialiased;
 }
 
+a {
+    text-decoration: none;
+  }
+  a:focus,
+  input:focus,
+  button:focus,
+  textarea:focus,
+  [class*='van-']:focus {
+    outline: none;
+  }
+
+
+
 html,body{
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    
 }
 /*375px布局*/
 html{font-size: 100px;}
@@ -25,7 +40,25 @@ input,button,input:focus,button:focus{
 button{
     font-weight: bold;
     user-select: none;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    position: relative;
+    
+}
+
+
+.border-but{
+    box-sizing: border-box;
+    border:.02rem solid #FFE000;
+    background:rgba(255,224,0,0.2);
+    font-size: .14rem;
+}
+.back-but{
+    background: #FFE000;
+    font-size: .14rem;
+    color: #333333;
+    border:0;
+    font-weight: bold;
+    border-radius: .05rem;
 }
 input{
     background: transparent;
