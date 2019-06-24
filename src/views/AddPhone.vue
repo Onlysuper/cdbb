@@ -26,12 +26,11 @@
                          <!-- <input type="tel" placeholder="請輸入驗證碼"> -->
                           <van-field ref="tel" clearable v-model="formData.code"  type="number" placeholder="請輸入驗證碼" />
                     </div>
-                    
                    <TimerBtn ref="TimerBtn" :text="'獲取驗證碼'" :time="60" :cb="sendCode"></TimerBtn>
                 </div>
             </div>
             <div class="form-footer">
-                <button @click="addPhone" class="back-but">添加手機號</button>
+                <button v-waves @click="addPhone" class="back-but">添加手機號</button>
             </div>
         </div>
     </div>
@@ -43,11 +42,12 @@
 
 
 <script>
+import waves from "@src/common/js/waves";
 import validator from "@src/common/js/validator.js"
 import { getCheckCode,addPhone } from "@src/apis";
 import TimerBtn from "@src/components/TimerBtn"
-// @ is an alias to /src
 export default {
+  directives:{waves},
   name: 'addcard',
   data(){
       return {

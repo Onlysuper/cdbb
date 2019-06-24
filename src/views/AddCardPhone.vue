@@ -54,7 +54,6 @@ import validator from "@src/common/js/validator.js"
 import TimerBtn from "@src/components/TimerBtn"
 import { getCheckCode,addCard } from "@src/apis";
 import waves from "@src/common/js/waves";
-// @ is an alias to /src
 export default {
   directives:{waves},
   name: 'addcardphone',

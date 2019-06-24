@@ -256,6 +256,7 @@ export default {
                         // 有手机号 进入手机号绑卡
                         this.$router.push({ name: 'addcard', params: { 
                          card:card,
+                         phone:getWhichNumber.phone,
                          hasPhone:true
                         }})
                     }else{
