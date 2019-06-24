@@ -328,7 +328,7 @@ export default {
                         membership:true
                     })
                 }
-                this.$toast(`该${whichNumber}已注册为会员`);
+                this.$toast.success(`该${whichNumber}已成功注册为会员`);
             }
           }else{
             _this.$toast('请先输入搜索关键字');

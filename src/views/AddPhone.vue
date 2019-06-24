@@ -86,7 +86,7 @@ export default {
         ...this.formData
       }).then(res=>{
         if(res.code==0){
-          this.Toast("手机号添加成功！");
+          this.Toast.success("手机号添加成功！");
           setTimeout(()=>{
              this.$router.replace({ name: 'history', params: { 
              }})

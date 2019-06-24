@@ -15,7 +15,7 @@ axios.interceptors.response.use(function (response) {
             Toast.clear()
             return response.data;
         }else{
-            Toast({
+            Toast.fail({
                 message:_data.msg,
                 duration:3000
             });

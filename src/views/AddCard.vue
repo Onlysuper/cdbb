@@ -68,7 +68,11 @@ export default {
                 ...this.formData
             }).then(res=>{
                 if(res.code==0){
-
+                    this.$toast.success("银行卡添加成功!");
+                    setTimeout(()=>{
+                        this.$router.replace({ name: 'history', params: { 
+                        }})
+                    },2000)
                 }
             })
         }
