@@ -7,6 +7,8 @@ import 'vant/lib/index.css';
 import { Toast } from 'vant'
 import { Field } from 'vant';
 import { Tab, Tabs } from 'vant';
+import mFilter from '@src/common/js/filters';
+Vue.use(mFilter);
 // Vue.use(Vant);
 Vue.use(Field);
 Vue.use(Toast);

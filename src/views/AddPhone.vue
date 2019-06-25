@@ -77,7 +77,7 @@ export default {
       }).then(res => {
         this.$refs.TimerBtn.disabled = true;
         this.$refs.TimerBtn.timer();
-        if (res.code == "001") {
+        if (res.code == "0") {
           this.$toast("验证码发送成功！");
         } else {
           this.$toast(res.message);
@@ -89,10 +89,11 @@ export default {
         ...this.formData
       }).then(res=>{
         if(res.code==0){
-          this.Toast.success("手机号添加成功！");
+          this.$toast.success("手机号添加成功！");
           this.CHANGE_KEEPALIVES([]);
           setTimeout(()=>{
              this.$router.replace({ name: 'history', params: { 
+               card: this.formData.card
              }})
           },2000)
         }

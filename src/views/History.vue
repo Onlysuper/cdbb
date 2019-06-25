@@ -46,11 +46,11 @@
                         </li>
                         <li>
                             <div class="label">押金金額:</div>
-                            <div class="content">{{item.ppriceYajin}}</div>
+                            <div class="content">{{item.ppriceYajin |moneyFormatCN(true)}}</div>
                         </li>
                         <li>
                             <div class="label">租金單價:</div>
-                            <div class="content">{{item.pprice}}</div>
+                            <div class="content">{{item.pprice |moneyFormatCN(true)}}</div>
                         </li>
                         <li>
                             <div class="label">電話號碼:</div>
@@ -87,19 +87,19 @@
                         </li>
                         <li>
                             <div class="label">租金單價:</div>
-                            <div class="content">{{item.pprice}}</div>
+                            <div class="content">{{item.pprice |moneyFormatCN(true)}}</div>
                         </li>
                         <li>
                             <div class="label">租金:</div>
-                            <div class="content">{{item.ppayPrice}}</div>
+                            <div class="content">{{item.ppayPrice |moneyFormatCN(true)}}</div>
                         </li>
                         <li>
                             <div class="label">押金金額:</div>
-                            <div class="content">{{item.ppriceYajin}}</div>
+                            <div class="content">{{item.ppriceYajin |moneyFormatCN(true)}}</div>
                         </li>
                         <li>
                             <div class="label">退還金額:</div>
-                            <div class="content">{{item.repayAmount}}</div>
+                            <div class="content">{{item.repayAmount |moneyFormatCN(true)}}</div>
                         </li>
                         <li>
                             <div class="label">機櫃號:</div>
@@ -265,9 +265,15 @@ export default {
               let getWhichNumber = await this.getWhichNumber();
                 if(getWhichNumber.card!=getWhichNumber.phone){
                     // 查询的是卡号
-                    this.$router.push({ name: 'addphone', params: { 
-                        card:card
-                    }})
+                     if(getWhichNumber.hasPhone!='true'){
+                        this.$router.push({ name: 'addphone', params: { 
+                            card:card
+                        }})
+                     }else{
+                        // 查询的是手机号,直接进入手机号绑卡
+                        _this.$toast('该手机号已经添加过了');
+                     }
+                   
                 }else{
                     // 查询的是手机号,直接进入手机号绑卡
                     _this.$toast('该手机号已经添加过了');
@@ -345,7 +351,7 @@ export default {
                         membership:true
                     })
                 }
-                this.$toast.success(`该${whichNumber}已成功注册为会员`);
+                this.$toast.success(`该${whichNumber}已是会员`);
             }
           }else{
             _this.$toast('请先输入搜索关键字');

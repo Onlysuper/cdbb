@@ -76,6 +76,7 @@ export default {
                     this.CHANGE_KEEPALIVES([]) //清空缓存
                     setTimeout(()=>{
                         this.$router.replace({ name: 'history', params: { 
+                              card: this.formData.card
                         }})
                     },2000)
                 }
