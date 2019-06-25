@@ -85,8 +85,8 @@ export default {
     ]),
       //获取验证码
     sendCode() {
-      if (!(validator.phoneNumber.test(this.formData.phone))) {
-        this.$toast("请输入正确手机号码!");
+      if (!(validator.phoneNumber.test(this.formData.phone))&&!(validator.email.test(this.formData.phone))) {
+        this.$toast("请输入正确手机号码或者邮箱号!");
         return false;
       }
       this.$refs.TimerBtn.timer();
@@ -106,8 +106,8 @@ export default {
     addCard(){
       let phone = this.formData.phone;
       let newCard = this.formData.newCard;
-      if (!(validator.phoneNumber.test(phone))) {
-        this.$toast("请输入正确手机号码!");
+      if (!(validator.phoneNumber.test(phone))&&!(validator.email.test(phone))) {
+        this.$toast("请输入正确手机号码或者邮箱号!");
         return false;
       }else if(!(validator.bankCard.test(newCard))){
         this.$toast("请输入正确的银行卡号!");

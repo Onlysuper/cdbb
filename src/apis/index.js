@@ -1,6 +1,7 @@
 import http from "./http";
 // const baseUrl = "http://power.xmfstore.com/power"//生产环境
-const baseUrl = "http://test54.qtopay.cn/power"// 测试环境
+const baseUrl = process.env.VUE_APP_BASEURL// 测试环境
+console.log(baseUrl);
 // 退还记录查询
 const getTrades = ()=>{return (data)=>{return http.getJson(baseUrl,'/trade/list',data)}}
 // 成为会员
