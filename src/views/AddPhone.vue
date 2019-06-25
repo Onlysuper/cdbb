@@ -9,7 +9,6 @@
                     </div>
                 </div>
             </div>
-          
             <div class="form-row">
                 <div class="label">手機號</div>
                 <div class="item">
@@ -46,6 +45,7 @@ import validator from "@src/common/js/validator.js"
 import { getCheckCode,addPhone } from "@src/apis";
 import TimerBtn from "@src/components/TimerBtn"
 import { setTimeout } from 'timers';
+import { mapState, mapActions } from "vuex";
 export default {
   directives:{waves},
   name: 'addcard',
@@ -62,7 +62,10 @@ export default {
       TimerBtn
   },
   methods:{
-       // 发送短信验证码
+     ...mapActions([
+      'CHANGE_KEEPALIVES'
+    ]),
+    // 发送短信验证码
     sendCode() {
       if (!(validator.phoneNumber.test(this.formData.phone))) {
         this.$toast("请输入正确手机号码!");
@@ -75,9 +78,9 @@ export default {
         this.$refs.TimerBtn.disabled = true;
         this.$refs.TimerBtn.timer();
         if (res.code == "001") {
-          this.Toast("验证码发送成功！");
+          this.$toast("验证码发送成功！");
         } else {
-          this.Toast(res.message);
+          this.$toast(res.message);
         }
       });
     },
@@ -87,6 +90,7 @@ export default {
       }).then(res=>{
         if(res.code==0){
           this.Toast.success("手机号添加成功！");
+          this.CHANGE_KEEPALIVES([]);
           setTimeout(()=>{
              this.$router.replace({ name: 'history', params: { 
              }})

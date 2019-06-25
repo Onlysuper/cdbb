@@ -73,7 +73,7 @@ export default {
             }).then(res=>{
                 if(res.code==0){
                     this.$toast.success("银行卡添加成功!");
-                    this.CHANGE_KEEPALIVES([])
+                    this.CHANGE_KEEPALIVES([]) //清空缓存
                     setTimeout(()=>{
                         this.$router.replace({ name: 'history', params: { 
                         }})

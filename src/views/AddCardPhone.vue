@@ -50,10 +50,12 @@
 
 
 <script>
+
 import validator from "@src/common/js/validator.js"
 import TimerBtn from "@src/components/TimerBtn"
 import { getCheckCode,addCard } from "@src/apis";
 import waves from "@src/common/js/waves";
+import { mapState, mapActions } from "vuex";
 export default {
   directives:{waves},
   name: 'addcardphone',
@@ -78,6 +80,9 @@ export default {
       TimerBtn
   },
   methods:{
+    ...mapActions([
+      'CHANGE_KEEPALIVES'
+    ]),
       //获取验证码
     sendCode() {
       if (!(validator.phoneNumber.test(this.formData.phone))) {
@@ -91,9 +96,9 @@ export default {
         this.$refs.TimerBtn.disabled = true;
         this.$refs.TimerBtn.timer();
         if (res.code == "001") {
-          this.Toast("验证码发送成功！");
+          this.$toast("验证码发送成功！");
         } else {
-          this.Toast(res.message);
+          this.$toast(res.message);
         }
       });
     },
@@ -113,6 +118,7 @@ export default {
       }).then(res=>{
         if(res.code==0){
           this.$toast.success("银行卡添加成功!");
+          this.CHANGE_KEEPALIVES([]) //清空缓存
           setTimeout(()=>{
              this.$router.replace({ name: 'history', params: { 
              }})
