@@ -33,7 +33,6 @@
                                     <div v-for="(item,index) in list" :key="index" :class="['item',item.preturnTime?'type2':'type1']">
                                         <!-- 查看租用start -->
                                         <template v-if="!(item.preturnTime)">
-                                            <div>第一种</div>
                                             <div @click="detailHandle({porderID:item.porderID,page:'rent'})" class="item-header">
                                                 查看租用详情
                                                 <img class="icon" src="../static/img/icon_right@3x.png" alt="">
@@ -74,7 +73,6 @@
                                         
                                         <!-- 查看退还详情start -->
                                         <template v-else>
-                                             <div>第二种</div>
                                              <div @click="detailHandle({porderID:item.porderID,page:'rent'})" class="item-header item-header2">
                                                 查看租用详情
                                                 <img class="icon" src="../static/img/icon_right@3x.png" alt="">
@@ -207,17 +205,17 @@ export default {
   data(){
       return {
         dayTime:'',
-        // card :this.$route.params.card,
-        card :'13233334444',
+        card :this.$route.params.card,
+        // card :'13233334444',
         page: 1,
         list: [],
         infiniteId: +new Date(),
         allLoaded:false,
         tips:[
-        {
-            label:'全部',
-            code:''
-        },
+        // {
+        //     label:'全部',
+        //     code:''
+        // },
         {
             label:'最近7天',
             code:'7'
@@ -355,8 +353,6 @@ export default {
                         }})
                     }
                 }else{
-                    // console.log(card);
-                    // return false;
                     // 查询的是手机号,直接进入手机号绑卡
                     this.$router.push({ name: 'addcard', params: { 
                       card:card,
@@ -387,8 +383,6 @@ export default {
           let card = this.card;
           if(card){
             let haveTrades = await this.haveTrades();
-            let getWhichNumber = await this.getWhichNumber();
-            let whichNumber = getWhichNumber.card!=getWhichNumber.phone?'卡号':'手机号';
             if(haveTrades){ // 有退还记录的才会有接下来的操作
                 // console.log(haveTrades.tradeList);
                 if(!haveTrades.tradeList.member){
@@ -398,7 +392,7 @@ export default {
                         membership:true
                     })
                 }
-                this.$toast.success(`该${whichNumber}已是会员`);
+                this.$toast.success(`该号码已是会员`);
             }
           }else{
             _this.$toast('请先输入搜索关键字');

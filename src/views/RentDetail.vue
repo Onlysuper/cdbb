@@ -46,7 +46,7 @@
                 </li>
                 <li>
                     <div class="label">操作員號</div>
-                    <div class="content">{{details.pServiceCode}}</div>
+                    <div class="content">{{details.pserviceCode}}</div>
                 </li>
                 <li>
                     <div class="label">批次號</div>
@@ -58,7 +58,7 @@
                 </li>
                 <li>
                     <div class="label">授權碼</div>
-                    <div class="content">{{details.pApprovalCode}}</div>
+                    <div class="content">{{details.papprovalCode}}</div>
                 </li>
                 <li>
                     <div class="label">交易參考號</div>

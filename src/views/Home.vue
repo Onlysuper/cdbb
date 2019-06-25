@@ -189,11 +189,9 @@ export default {
       // 查询并成为会员
       async searchBeVip(){
         let _this = this;
-        let getWhichNumber = await this.getWhichNumber();
-        let whichNumber = getWhichNumber.card!=getWhichNumber.phone?'卡号':'手机号';
         let searchVal=this.searchVal;
         let haveTrades = await this.haveTrades();// 是否有退还记录
-        if(haveTrades){
+        if(haveTrades&&haveTrades.tradeList.buyLists&&haveTrades.tradeList.buyLists.length>0){
             if(!haveTrades.tradeList.member){
                  // 没有注册过会员的可注册会员,注册过的就不用了
                 await beVip()({
@@ -201,7 +199,7 @@ export default {
                     membership:true
                 })
             }
-            this.$toast(`该${whichNumber}已成功注册为会员`);
+            this.$toast(`该号码已成功注册为会员`);
 
             let _time = setTimeout(()=>{
                 clearTimeout(_time)
