@@ -1,5 +1,5 @@
 <template>
-   <div class="page rentdetail-page">
+   <div class="page backdetail-page">
        <div class="container">
             <div class="m-header">送电宝宝租借单</div>
             <ul>

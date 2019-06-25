@@ -204,13 +204,15 @@ export default {
         ]),
          // 开始搜索
         searchHandle(dayTime){
+            // console.log('开始搜索');
             this.page=1;
             this.dayTime = dayTime;
             this.allLoaded=false;
+            this.list=[];
             this.$refs.loadmore.finishInfinite(false);
         },
         refresh(done) {
-            console.log('下拉刷新');
+            // console.log('下拉刷新');
             this.allLoaded = false;
             this.getTradesHandle().then(data=>{
                     setTimeout(() => {
@@ -221,9 +223,8 @@ export default {
             })
         },
         infinite(done) {
-            console.log('上拉加载')
+            // console.log('上拉加载')
             if(this.allLoaded){
-                //  this.list=[];
                 done(true)
             }else{
                this.getTradesHandle().then(data=>{
@@ -341,7 +342,7 @@ export default {
             let getWhichNumber = await this.getWhichNumber();
             let whichNumber = getWhichNumber.card!=getWhichNumber.phone?'卡号':'手机号';
             if(haveTrades){ // 有退还记录的才会有接下来的操作
-                console.log(haveTrades.tradeList);
+                // console.log(haveTrades.tradeList);
                 if(!haveTrades.tradeList.member){
                     // 没有注册过会员的可注册会员,注册过的就不用了
                     await beVip()({
@@ -364,7 +365,7 @@ export default {
                 card:this.card
             }})
           }else{
-              console.log('这里赛');
+            //   console.log('这里赛');
               // 租用详情
             this.$router.push({ name: 'rentdetail', params: { 
                 orderId: obj.porderID,
