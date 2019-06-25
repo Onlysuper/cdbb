@@ -23,7 +23,7 @@ a {
 html,body{
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
-    
+    min-height: 100%;
 }
 /*375px布局*/
 html{font-size: 100px;}

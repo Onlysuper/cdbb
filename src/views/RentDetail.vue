@@ -70,7 +70,7 @@
 </template>
 <style lang="scss">
   @import url(../static/sass/base.scss);
-  @import url(../static/sass/backdetail.scss);
+  @import url(../static/sass/rentdetail.scss);
 </style>
 
 
