@@ -29,7 +29,7 @@
                 </li>
                 <li>
                     <div class="label">租金單價</div>
-                    <div class="content">{{details.pprice}}</div>
+                    <div class="content">{{details.pprice |moneyFormatCN(true)}}</div>
                 </li>
                 <li>
                     <div class="label">租用時間</div>

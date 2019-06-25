@@ -6,27 +6,30 @@
                 <img @click="searchHandle()" class="icon" src="../static/img/icon_search@3x.png" alt="">
             </div>
        </div>
-        <div class="search-place"></div>
+        <!-- <div class="search-place"></div> -->
+         <div class="search-top" ref="search-tip-grop">
+                    <div class="search-tip">
+                        {{tipText}}租用退还记录
+                    </div>
+                        <!-- <div class="search-tip-grop">
+                            <div v-for="item in tips" :key="item.code" @click="searchHandle(item.code)" :class="['tip',{selected1:dayTime==item.code?true:false}]">{{item.label}}</div>
+                        </div> -->
+                    <div class="search-tip-grop">
+                        <van-tabs :swipeable='true' title-active-color="#f6f6f6" background="#f6f6f6" :border='false' :ellipsis='false' :line-width='0'>
+                        <van-tab v-for="item in tips" :key="item.code">
+                                <div slot="title">
+                                    <div @click="searchHandle(item.code)" :class="['tip',{selected1:dayTime==item.code?true:false}]">{{item.label}}</div>
+                                </div>
+                            </van-tab>
+                        </van-tabs>
+                    </div>
+                </div>
         <div class="main-container">
-                
-                 <scroller style="background:tranparent;padding-top:.32rem" 
+                 <scroller style="background:tranparent;"
                         :on-refresh="refresh"
                         :on-infinite="infinite"
                         ref="loadmore">
-                        <div class="search-top" ref="search-tip-grop">
-                            <div class="search-tip">
-                                {{tipText}}租用退还记录
-                            </div>
-                            <div class="search-tip-grop">
-                                <van-tabs title-active-color="#f6f6f6" background="#f6f6f6" :border='false' :ellipsis='false' :line-width='0'>
-                                <van-tab v-for="item in tips" :key="item.code">
-                                        <div slot="title">
-                                            <div @click="searchHandle(item.code)" :class="['tip',{selected1:dayTime==item.code?true:false}]">{{item.label}}</div>
-                                        </div>
-                                    </van-tab>
-                                </van-tabs>
-                            </div>
-                        </div>
+                       
                                 <div class="list-container">
                                 
                                                 <div v-for="(item,index) in list" :key="index" :class="['item','type1',item.preturnTime?'type2':'type1']">

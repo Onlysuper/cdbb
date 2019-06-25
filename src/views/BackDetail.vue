@@ -5,19 +5,19 @@
             <ul>
                 <li>
                     <div class="label">押金金額</div>
-                    <div class="content">{{details.ppriceYajin}}</div>
+                    <div class="content">{{details.ppriceYajin |moneyFormatCN(true)}}</div>
                 </li>
                 <li>
                     <div class="label">退還金額</div>
-                    <div class="content">{{details.repayAmount}}</div>
+                    <div class="content">{{details.repayAmount |moneyFormatCN(true)}}</div>
                 </li>
                 <li>
                     <div class="label">租金</div>
-                    <div class="content">{{details.ppayPrice}}</div>
+                    <div class="content">{{details.ppayPrice |moneyFormatCN(true)}}</div>
                 </li>
                 <li>
                     <div class="label">租金單價</div>
-                    <div class="content">{{details.pprice}}</div>
+                    <div class="content">{{details.pprice |moneyFormatCN(true)}}</div>
                 </li>
                 <li>
                     <div class="label">租用時間</div>

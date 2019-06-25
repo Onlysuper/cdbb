@@ -25,6 +25,9 @@ html,body{
     -webkit-tap-highlight-color: transparent;
     min-height: 100%;
 }
+html{
+    margin:0 auto
+}
 /*375px布局*/
 html{font-size: 100px;}
 body{font-size: 0.14rem;/*实际相当于14px*/}

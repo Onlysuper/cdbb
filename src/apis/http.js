@@ -14,6 +14,15 @@ axios.interceptors.response.use(function (response) {
         if(_data && _data.code === 0){
             Toast.clear()
             return response.data;
+        }else if(_data && _data.code === 1001){
+            Toast.fail({
+                message:'没有该手机或者卡号的租借记录',
+                duration:3000
+            });
+            return Promise.reject({
+                code: _data.code,
+                msg: _data.msg
+            });
         }else{
             Toast.fail({
                 message:_data.msg,
