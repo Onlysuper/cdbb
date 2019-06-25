@@ -2,7 +2,8 @@
 
 }
 .backdetail-page .container{
-    margin-top: .15rem;
+    padding-top: .15rem;
+    padding-bottom: .15rem;
 }
 .backdetail-page .container .m-header{
     border-radius: .05rem .05rem 0 0;
@@ -12,7 +13,7 @@
     color: #fff;
     font-size: .16rem;
     text-align: center; 
-    /* font-weight: bold; */
+     font-weight: bold; 
 }
 .backdetail-page .container ul{
     background: rgba(92,148,239,0.1);
@@ -29,6 +30,7 @@
 }
 .backdetail-page .container li .label{
     color: #333333;
+    font-weight: bold;
 }
 .backdetail-page .container li .content{
     color: #666666;
