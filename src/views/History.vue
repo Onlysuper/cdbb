@@ -30,86 +30,133 @@
                         :on-infinite="infinite"
                         ref="loadmore">
                                 <div class="list-container">
-                                    <div v-for="(item,index) in list" :key="index" :class="['item','type1',item.preturnTime?'type2':'type1']">
-                                        <div @click="detailHandle({porderID:item.porderID,preturnTime:item.preturnTime})" class="item-header">
-                                            {{item.preturnTime?'查看退还详情':'查看租用详情'}}
-                                            <img class="icon" src="../static/img/icon_right@3x.png" alt="">
-                                        </div>
-                                        <!-- <div>{{item.preturnTime}}</div> -->
+                                    <div v-for="(item,index) in list" :key="index" :class="['item',item.preturnTime?'type2':'type1']">
                                         <!-- 查看租用start -->
-                                        <div v-if="!item.preturnTime" class="item-body">
-                                            <ul>
-                                                <li>
-                                                    <div class="label">租用時間:</div>
-                                                    <div class="content">{{item.pborrowTime}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">押金金額:</div>
-                                                    <div class="content">{{item.ppriceYajin |moneyFormatCN(true)}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">租金單價:</div>
-                                                    <div class="content">{{item.pprice |moneyFormatCN(true)}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">電話號碼:</div>
-                                                    <div class="content">{{item.pphone}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">唯一查詢號:</div>
-                                                    <div class="content">{{item.popenID || item.pphone}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">機櫃編碼:</div>
-                                                    <div class="content">{{item.pdeviceID}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">送電寶寶編號:</div>
-                                                    <div class="content">{{item.pbatteryID}}</div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <template v-if="!(item.preturnTime)">
+                                            <div>第一种</div>
+                                            <div @click="detailHandle({porderID:item.porderID,page:'rent'})" class="item-header">
+                                                查看租用详情
+                                                <img class="icon" src="../static/img/icon_right@3x.png" alt="">
+                                            </div>
+                                            <div class="item-body">
+                                                <ul>
+                                                    <li>
+                                                        <div class="label">租用時間:</div>
+                                                        <div class="content">{{item.pborrowTime}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">押金金額:</div>
+                                                        <div class="content">{{item.ppriceYajin |moneyFormatCN(true)}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">租金單價:</div>
+                                                        <div class="content">{{item.pprice |moneyFormatCN(true)}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">電話號碼:</div>
+                                                        <div class="content">{{item.pphone}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">唯一查詢號:</div>
+                                                        <div class="content">{{item.popenID || item.pphone}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">機櫃編碼:</div>
+                                                        <div class="content">{{item.pdeviceID}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">送電寶寶編號:</div>
+                                                        <div class="content">{{item.pbatteryID}}</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </template>
+                                        
                                         <!-- 查看退还详情start -->
-                                        <div v-else class="item-body">
-                                            <ul>
-                                                <li>
-                                                    <div class="label">租用時間:</div>
-                                                    <div class="content">{{item.pborrowTime}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">退還時間:</div>
-                                                    <div class="content">{{item.preturnTime}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">租借時長:</div>
-                                                    <div class="content">{{item.puseTime}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">租金單價:</div>
-                                                    <div class="content">{{item.pprice |moneyFormatCN(true)}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">租金:</div>
-                                                    <div class="content">{{item.ppayPrice |moneyFormatCN(true)}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">押金金額:</div>
-                                                    <div class="content">{{item.ppriceYajin |moneyFormatCN(true)}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">退還金額:</div>
-                                                    <div class="content">{{item.repayAmount |moneyFormatCN(true)}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">機櫃號:</div>
-                                                    <div class="content">{{item.pdeviceID}}</div>
-                                                </li>
-                                                <li>
-                                                    <div class="label">送電寶寶編號:</div>
-                                                    <div class="content">{{item.pbatteryID}}</div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <template v-else>
+                                             <div>第二种</div>
+                                             <div @click="detailHandle({porderID:item.porderID,page:'rent'})" class="item-header item-header2">
+                                                查看租用详情
+                                                <img class="icon" src="../static/img/icon_right@3x.png" alt="">
+                                            </div>
+                                            <div class="item-body">
+                                                <ul>
+                                                    <li>
+                                                        <div class="label">租用時間:</div>
+                                                        <div class="content">{{item.pborrowTime}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">押金金額:</div>
+                                                        <div class="content">{{item.ppriceYajin |moneyFormatCN(true)}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">租金單價:</div>
+                                                        <div class="content">{{item.pprice |moneyFormatCN(true)}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">電話號碼:</div>
+                                                        <div class="content">{{item.pphone}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">唯一查詢號:</div>
+                                                        <div class="content">{{item.popenID || item.pphone}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">機櫃編碼:</div>
+                                                        <div class="content">{{item.pdeviceID}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">送電寶寶編號:</div>
+                                                        <div class="content">{{item.pbatteryID}}</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div @click="detailHandle({porderID:item.porderID,page:'back'})" class="item-header">
+                                                查看退还详情
+                                                <img class="icon" src="../static/img/icon_right@3x.png" alt="">
+                                            </div>
+                                            <div  class="item-body">
+                                                <ul>
+                                                    <li>
+                                                        <div class="label">租用時間:</div>
+                                                        <div class="content">{{item.pborrowTime}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">退還時間:</div>
+                                                        <div class="content">{{item.preturnTime}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">租借時長:</div>
+                                                        <div class="content">{{item.puseTime}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">租金單價:</div>
+                                                        <div class="content">{{item.pprice |moneyFormatCN(true)}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">租金:</div>
+                                                        <div class="content">{{item.ppayPrice |moneyFormatCN(true)}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">押金金額:</div>
+                                                        <div class="content">{{item.ppriceYajin |moneyFormatCN(true)}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">退還金額:</div>
+                                                        <div class="content">{{item.repayAmount |moneyFormatCN(true)}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">機櫃號:</div>
+                                                        <div class="content">{{item.pdeviceID}}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="label">送電寶寶編號:</div>
+                                                        <div class="content">{{item.pbatteryID}}</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </template>
+                                        
                                         <!-- 查看退还详情end -->
                                     </div>
                                     
@@ -359,20 +406,31 @@ export default {
       },
       // 查看详情
       detailHandle(obj){
-          if(obj.preturnTime){
-              // 退还详情
-            this.$router.push({ name: 'backdetail', params: { 
-                orderId: obj.porderID,
-                card:this.card
-            }})
-          }else{
-            //   console.log('这里赛');
-              // 租用详情
+          if(obj.page=='rent'){
             this.$router.push({ name: 'rentdetail', params: { 
                 orderId: obj.porderID,
                 card:this.card
             }})
+          }else if(obj.page=='back'){
+            this.$router.push({ name: 'backdetail', params: { 
+                orderId: obj.porderID,
+                card:this.card
+            }})
           }
+        //   if(obj.preturnTime){
+        //       // 退还详情
+        //     this.$router.push({ name: 'backdetail', params: { 
+        //         orderId: obj.porderID,
+        //         card:this.card
+        //     }})
+        //   }else{
+        //     //   console.log('这里赛');
+        //       // 租用详情
+        //     this.$router.push({ name: 'rentdetail', params: { 
+        //         orderId: obj.porderID,
+        //         card:this.card
+        //     }})
+        //   }
          
       },
       // 加载数据

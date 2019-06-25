@@ -82,7 +82,11 @@ const routerObj={
   ]
 }
 const router = new Router(routerObj)
-const keepAlives = routerObj['routes'].map(item=>{return item.name})
+const keepAlives = routerObj['routes'].map(item=>{
+  if(item.meta.keepAlive){
+    return item.name
+  }
+})
 // console.log(keepAlives);
 router.beforeEach((to, redirect, next) => {
   if(redirect.name=='home'||!redirect.name){
