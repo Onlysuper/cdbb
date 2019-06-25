@@ -1,5 +1,6 @@
 import http from "./http";
-const baseUrl = "http://power.xmfstore.com/power"
+// const baseUrl = "http://power.xmfstore.com/power"//生产环境
+const baseUrl = "http://test54.qtopay.cn/power/"// 测试环境
 // 退还记录查询
 const getTrades = ()=>{return (data)=>{return http.getJson(baseUrl,'/trade/list',data)}}
 // 成为会员
@@ -15,7 +16,7 @@ const getWhichNumber= ()=>{return (data)=>{return http.getJson(baseUrl,'/trade/c
 const addPhone =()=>{return (data)=>{return http.getJson(baseUrl,'/trade/addPhone',data)}}
 
 // 添加银行卡
-const addCard =()=>{return (data)=>{return http.postJson(baseUrl,'/trade/addBank',data)}}
+const addCard =()=>{return (data)=>{return http.getJson(baseUrl,'/trade/addBank',data)}}
 
 // 查看详情
 const getDetail =()=>{return (data)=>{return http.getJson(baseUrl,'/trade/getBuyDetail',data)}}

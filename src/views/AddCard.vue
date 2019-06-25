@@ -5,7 +5,7 @@
                 <div class="m-label">查詢手機號</div>
                 <div class="item">
                     <div class="input-box no-back">
-                      {{formData.phone}}
+                      {{formData.card}}
                     </div>
                 </div>
             </div>
@@ -44,6 +44,7 @@
 <script>
 import { addCard } from "@src/apis";
 import waves from "@src/common/js/waves";
+import { mapState, mapActions } from "vuex";
 export default {
     directives:{waves},
     data(){
@@ -53,7 +54,7 @@ export default {
                 // code:'',// 验证码
                 hasPhone:this.$route.params.hasPhone,// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
                 newCard:'',// 新添加的银行卡卡号
-                phone:this.$route.params.phone,// 手机号码或者邮箱
+                phone:this.$route.params.card,// 手机号码或者邮箱
                 validityDate:'',// 银行卡有效期
                 cvv:'' //卡背面CVV号
             } 
@@ -63,12 +64,16 @@ export default {
     components: {
     },
     methods:{
+        ...mapActions([
+         'CHANGE_KEEPALIVES'
+        ]),
         addCard(){
             addCard()({
                 ...this.formData
             }).then(res=>{
                 if(res.code==0){
                     this.$toast.success("银行卡添加成功!");
+                    this.CHANGE_KEEPALIVES([])
                     setTimeout(()=>{
                         this.$router.replace({ name: 'history', params: { 
                         }})

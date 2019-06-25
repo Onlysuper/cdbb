@@ -67,6 +67,7 @@
                     <div class="label">交易參考號</div>
                     <div class="content">{{details.transactionNo}}</div>
                 </li>    
+
             </ul>
        </div>
     </div>
@@ -78,14 +79,21 @@
 
 
 <script>
+import { mapState, mapActions } from "vuex";
 import { getDetail } from "@src/apis";
 export default {
   name: 'rentdetail',
   data(){
       return {
           orderId:this.$route.params.orderId+'',
+          card:this.$route.params.card+'',
           details:{}
       }
+  },
+  computed: {
+    ...mapState({
+      searchVal: state => state.SEARCHVAL,
+    })
   },
   created(){
       getDetail()({

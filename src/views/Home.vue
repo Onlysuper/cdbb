@@ -163,6 +163,7 @@ import { getTrades,beVip,getWhichNumber } from "@src/apis";
 import waves from "@src/common/js/waves";
 import storage from "@src/common/js/storage";
 import { setTimeout, clearTimeout } from 'timers';
+import { mapState, mapActions } from "vuex";
 export default {
   directives:{waves},
   name: 'home',
@@ -178,9 +179,11 @@ export default {
       async searchHandle(){
         let haveTrades = await this.haveTrades();
         if(haveTrades){
-            this.$router.push({ name: 'history', params: { 
-                card: this.searchVal
-            }})
+            this.$nextTick(()=>{
+                this.$router.push({ name: 'history', params: { 
+                    card: this.searchVal
+                }})
+            })
         }
       },
       // 查询并成为会员
@@ -199,6 +202,7 @@ export default {
                 })
             }
             this.$toast(`该${whichNumber}已成功注册为会员`);
+
             let _time = setTimeout(()=>{
                 clearTimeout(_time)
                 this.$router.push({ name: 'history', params: { 
@@ -206,7 +210,6 @@ export default {
                 }})
             },2000)
         }
-
       },
        // 检测输入的是手机号还是银行卡
       async getWhichNumber(){

@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <router-view/>
+     <!-- <view>{{KEEPALIVES}}</view> -->
+    <keep-alive :include="KEEPALIVES">
+      <router-view></router-view>
+    </keep-alive>
+    <!-- <router-view v-if="!$route.meta.keepAlive"></router-view> -->
   </div>
 </template>
 
@@ -12,9 +16,14 @@
 </style>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import "@src/common/js/media.js"
 export default {
-  
+   computed: {
+    ...mapState({
+      KEEPALIVES: state => state.KEEPALIVES,
+    })
+  },
 }
 </script>
 

@@ -10,7 +10,9 @@
         <div class="search-place"></div>
        <div class="search-top">
           <div class="search-tip">
-             最近的2次租用退还记录
+              <!-- {{dayTime}} -->
+             {{tipText}}租用退还记录
+             <!-- 最近的2次租用退还记录 -->
           </div>
           <div class="search-tip-grop">
               <van-tabs title-active-color="#f6f6f6" background="#f6f6f6" :border='false' :ellipsis='false' :line-width='0'>
@@ -18,7 +20,8 @@
                   <!-- {{item.label}} -->
                     <div slot="title">
                     <!-- <van-icon name="more-o" />选项 -->
-                    <div @click="searchHandle(item.code)" :class="['tip',{selected:dayTime==item.code?true:false}]">{{item.label}}</div>
+                    <!-- <div @click="searchHandle(item.code)" :class="['tip',{selected:dayTime==item.code?true:false}]">{{item.label}}</div> -->
+                        <div @click="searchHandle(item.code)" :class="['tip',{selected1:dayTime==item.code?true:false}]">{{item.label}}</div>
                     </div>
                     <!-- 内容 {{ index }} -->
                 </van-tab>
@@ -183,6 +186,7 @@
 
 
 <script>
+import { mapState, mapActions } from "vuex";
 import waves from "@src/common/js/waves";
 import { getTrades,beVip,getWhichNumber } from "@src/apis";
 import InfiniteLoading from 'vue-infinite-loading';
@@ -195,8 +199,7 @@ export default {
   data(){
       return {
         dayTime:'',
-        // card :this.$route.params.card,
-        card :'',
+        card :this.$route.params.card,
         page: 1,
         list: [],
         infiniteId: +new Date(),
@@ -224,16 +227,24 @@ export default {
         ]
       }
   },
+  computed:{
+     tipText(){
+          if(this.dayTime){
+               return this.tips.find(item=>item.code==this.dayTime)['label']
+          }else{
+              return '全部'
+          }
+     }
+  },
   methods:{
-      tipChange(ev){
-          console.log(ev);
-      },
+        ...mapActions([
+         'CHANGE_KEEPALIVES'
+        ]),
       //如果有退还记录才可以进行接下来的操作
       haveTrades(){
-        let searchVal=this.card;
-        return new Promise(function(resolve, reject){
+        return new Promise((resolve, reject)=>{
             getTrades()({
-                card:searchVal
+                card:this.card
             }).then(res=>{
                 let data = res.tradeList.buyLists;
                 if(data&&data.length>0){
@@ -291,6 +302,8 @@ export default {
                         }})
                     }
                 }else{
+                    // console.log(card);
+                    // return false;
                     // 查询的是手机号,直接进入手机号绑卡
                     this.$router.push({ name: 'addcard', params: { 
                       card:card,
@@ -324,10 +337,11 @@ export default {
             let getWhichNumber = await this.getWhichNumber();
             let whichNumber = getWhichNumber.card!=getWhichNumber.phone?'卡号':'手机号';
             if(haveTrades){ // 有退还记录的才会有接下来的操作
+                console.log(haveTrades.tradeList);
                 if(!haveTrades.tradeList.member){
                     // 没有注册过会员的可注册会员,注册过的就不用了
                     await beVip()({
-                        card:searchVal,
+                        card:this.card,
                         membership:true
                     })
                 }
@@ -342,12 +356,14 @@ export default {
           if(obj.preturnTime){
               // 退还详情
             this.$router.push({ name: 'backdetail', params: { 
-                card: obj.porderID 
+                orderId: obj.porderID,
+                card:this.card
             }})
           }else{
               // 租用详情
             this.$router.push({ name: 'rentdetail', params: { 
-                card: obj.porderID 
+                orderId: obj.porderID,
+                card:this.card
             }})
           }
          
