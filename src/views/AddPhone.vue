@@ -67,7 +67,12 @@ export default {
     ]),
     // 发送短信验证码
     sendCode() {
-      if (!(validator.phoneNumber.test(this.formData.phone))&&!(validator.email.test(this.formData.phone))) {
+      if (
+        !(validator.phoneNumber.test(this.formData.phone))&&
+        !(validator.email.test(this.formData.phone))&&
+        !(validator.mobilePatternHK.test(this.formData.phone))&&
+        !(validator.mobilePatternTW.test(this.formData.phone))
+        ) {
         this.$toast("请输入正确手机号码!");
         return false;
       }

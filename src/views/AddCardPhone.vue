@@ -86,7 +86,12 @@ export default {
     ]),
       //获取验证码
     sendCode() {
-      if (!(validator.phoneNumber.test(this.formData.phone))&&!(validator.email.test(this.formData.phone))) {
+      if (
+        !(validator.phoneNumber.test(this.formData.phone))&&
+        !(validator.email.test(this.formData.phone))&&
+        !(validator.mobilePatternHK.test(this.formData.phone))&&
+        !(validator.mobilePatternTW.test(this.formData.phone))
+        ) {
         this.$toast("请输入正确手机号码或者邮箱号!");
         return false;
       }
