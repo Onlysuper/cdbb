@@ -4,20 +4,14 @@ import router from './router'
 import store from './store'
 // import Vant from 'vant';
 import 'vant/lib/index.css';
-import { Toast } from 'vant'
-import { Field } from 'vant';
-import { Tab, Tabs } from 'vant';
+import { Toast,Field,Tab, Tabs } from 'vant'
+// import { Toast,Field } from 'vant'
 import mFilter from '@src/common/js/filters';
 import VueScroller from 'vue-scroller'
 Vue.use(mFilter);
-// Vue.use(Vant);
-Vue.use(Field);
-Vue.use(Toast);
 Vue.use(VueScroller);
-
-Vue.use(Tab).use(Tabs);
-
-
+Vue.use(Tab).use(Tabs).use(Toast).use(Field);
+Vue.use(Toast).use(Field);
 Vue.config.productionTip = false
 
 new Vue({

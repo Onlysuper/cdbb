@@ -25,7 +25,7 @@ const routerObj={
     {
       path: '/history',
       name: 'history',
-      component: History,
+      component: () => import(/* webpackChunkName: "History" */ './views/History.vue'),
       meta: {
         keepAlive: true // 不需要缓存
       }
@@ -33,7 +33,7 @@ const routerObj={
     {
       path: '/backdetail',
       name: 'backdetail',
-      component: BackDetail,
+      component: () => import(/* webpackChunkName: "BackDetail" */ './views/BackDetail.vue'),
       meta: {
         keepAlive: false // 不需要缓存
       }
@@ -41,7 +41,7 @@ const routerObj={
     {
       path: '/rentdetail',
       name: 'rentdetail',
-      component: RentDetail,
+      component: () => import(/* webpackChunkName: "RentDetail" */ './views/RentDetail.vue'),
       meta: {
         keepAlive: false // 不需要缓存
       }
@@ -49,7 +49,7 @@ const routerObj={
     {
       path: '/addcard',
       name: 'addcard',
-      component: AddCard,
+      component: () => import(/* webpackChunkName: "AddCard" */ './views/AddCard.vue'),
       meta: {
         keepAlive: false // 不需要缓存
       }
@@ -57,7 +57,7 @@ const routerObj={
     {
       path: '/addcardphone',
       name: 'addcardphone',
-      component: AddCardPhone,
+      component: () => import(/* webpackChunkName: "AddCardPhone" */ './views/AddCardPhone.vue'),
       meta: {
         keepAlive: false // 不需要缓存
       }
@@ -65,7 +65,7 @@ const routerObj={
     {
       path: '/addphone',
       name: 'addphone',
-      component: AddPhone,
+      component: () => import(/* webpackChunkName: "AddPhone" */ './views/AddPhone.vue'),
       meta: {
         keepAlive: false // 不需要缓存
       }

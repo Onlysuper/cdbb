@@ -1,7 +1,8 @@
 import http from "./http";
 // const baseUrl = "http://power.xmfstore.com/power"//生产环境
 const baseUrl = process.env.VUE_APP_BASEURL// 测试环境
-console.log(baseUrl);
+// 首页信息
+const getAbout = ()=>{return (data)=>{return http.getJson(baseUrl,'/trade/getDefaultValue',data)}}
 // 退还记录查询
 const getTrades = ()=>{return (data)=>{return http.getJson(baseUrl,'/trade/list',data)}}
 // 成为会员
@@ -29,5 +30,6 @@ export {
     addCard,
     getCheckCode,
     getWhichNumber,
-    getDetail
+    getDetail,
+    getAbout
 }

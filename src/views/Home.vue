@@ -160,7 +160,7 @@
 
 
 <script>
-import { getTrades,beVip,getWhichNumber } from "@src/apis";
+import { getAbout,getTrades,beVip,getWhichNumber } from "@src/apis";
 import waves from "@src/common/js/waves";
 import storage from "@src/common/js/storage";
 import { setTimeout, clearTimeout } from 'timers';
@@ -240,7 +240,16 @@ export default {
                 resolve(false);
             })
          });
+      },
+      // 租用还款条款
+      getAbout(){
+          getAbout()().then(res=>{
+              console.log(res);
+          })
       }
+  },
+  created(){
+      this.getAbout();
   }
 }
 </script>

@@ -50,7 +50,8 @@
 
 
 <script>
-
+import encrypt from "@src/common/js/encrypt.js"
+import utils from "@src/common/js/utils.js"
 import validator from "@src/common/js/validator.js"
 import TimerBtn from "@src/components/TimerBtn"
 import { getCheckCode,addCard } from "@src/apis";
@@ -104,6 +105,24 @@ export default {
     },
     // 添加银行卡
     addCard(){
+      // console.log(this.formData);
+      // console.log(encrypt.Encrypt);
+     
+      // let EncryptData = encrypt.Encrypt(utils.pickObj(this.formDatam,['card','']),'zFzFcomTransKey1')
+      let EncryptData = encrypt.Encrypt({
+        card:this.formData.card,// 查询的卡号或者手机号
+        code:this.formData.code,// 验证码
+        hasPhone:this.formData.hasPhone,// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
+        newCard:this.formData.newCard,// 新添加的银行卡卡号
+        phone:this.formData.phone,// 手机号码或者邮箱
+        validityDate:this.formData.validityDate,// 银行卡有效期
+        cvv:this.formData.cvv //卡背面CVV号
+      },'zFzFcomTransKey1')
+      let sendData={
+        EncryptData:EncryptData
+      }
+      console.log(sendData);
+      return false;
       let phone = this.formData.phone;
       let newCard = this.formData.newCard;
       if (!(validator.phoneNumber.test(phone))&&!(validator.email.test(phone))) {

@@ -192,6 +192,7 @@
   @import url(../static/sass/history.scss);
 </style>
 <script>
+// import { Tab, Tabs } from 'vant'
 import { mapState, mapActions } from "vuex";
 import waves from "@src/common/js/waves";
 import { getTrades,beVip,getWhichNumber } from "@src/apis";
@@ -201,6 +202,7 @@ export default {
   name: 'history',
   components: {
     //   InfiniteLoading
+    // Tab, Tabs
   },
   data(){
       return {
