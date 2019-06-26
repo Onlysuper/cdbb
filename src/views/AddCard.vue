@@ -70,6 +70,9 @@ export default {
         addCard(){
             let sendData = encrypt.EncryptObj(this.formData,
             ['card','phone','newCard','validityDate','cvv']);
+            this.$toast.loading({
+                message: '提交中...'
+            });
             addCard()({
                 ...sendData
             }).then(res=>{

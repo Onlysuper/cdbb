@@ -80,7 +80,7 @@ export default {
             url: url,
             baseURL: baseURL,
             data: data,
-            timeout: 10000,
+            timeout: 30000,
             headers: {
                 "X-requested-With": "XMLHttpRequest",
                 "Content-Type": "application/json"
@@ -93,7 +93,7 @@ export default {
             url: url,
             baseURL: baseURL,
             data: qs.stringify(data),
-            timeout: 10000,
+            timeout: 60000,
             headers: {
                 "X-requested-With": "XMLHttpRequest",
                 //使用form表单进行数据交互
@@ -107,7 +107,7 @@ export default {
             url: url,
             baseURL: baseURL,
             params: params,
-            timeout: 10000,
+            timeout: 30000,
             headers: {
                 "Content-Type": "application/json"
             }
@@ -119,7 +119,7 @@ export default {
             url: url,
             baseURL: baseURL,
             params: params,
-            timeout: 10000,
+            timeout: 30000,
             headers: {
                 "X-requested-With": "XMLHttpRequest"
             }
