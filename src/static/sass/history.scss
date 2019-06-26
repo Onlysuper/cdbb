@@ -145,9 +145,12 @@ body{
 }
 .list-container .item-body li .label{
     color: #666666;
+    white-space: nowrap;
+    padding-right: .2rem;
 }
 .list-container .item-body li .content{
-    color: #333
+    color: #333;
+    word-break: break-all;
 }
 .footer-place{
     height: .49rem;

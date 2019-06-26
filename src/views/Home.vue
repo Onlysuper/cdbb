@@ -19,8 +19,7 @@
                     銀行卡號/手機號
                 </div>
                 <div class="item">
-                    <van-field clearable v-model="searchVal"  type="tel" placeholder="请输入用于租用的卡号或是手机号" />
-                    <!-- <input  v-model="searchVal" type="number" placeholder="请输入用于租用的卡号或是手机号"> -->
+                    <van-field clearable v-model="card"  type="tel" placeholder="请输入用于租用的卡号或是手机号" />
                 </div>
             </div>
             <div class="operation-box">
@@ -32,15 +31,15 @@
         <div class="clause">
             <div class="m-label">租用還回條款</div>
             <div class="content">
-                    1、租用时，扣可退押金99元<br/>
-                    2、租金为：1元/小时，不足1小时以1小时收费<br/>
+                    1、租用时，扣可退押金{{deposit}}元<br/>
+                    2、租金为：{{times}}元/小时，不足1小时以1小时收费<br/>
                     3、租时算法：成功扣取可退回押金时计算<br/>
                     4、小票或明细在公司网站或微信公众号查询<br/>
                     5、押金会在还回送电宝宝时，扣取租金把余额退回<br/>
-                    6、成为会员，可以从成为会员那天连续七天免费享受租用送电宝<br/>  
-                         宝，租用中需扣99元押金，还时退押金！<br/>
+                    6、成为会员，可以从成为会员那天连续七天免费享受租用送电宝宝，租用中需扣{{deposit}}元押金，还时退押金！<br/>
                     7、如有问题：请电852-68882022查询<br/>
-                    8、最终解释权，归公司所有！<br/>
+                    8、实际使用中的租金及押金，以实际店铺收取为准<br/>
+                    9、最终解释权，归公司所有！<br/>
             </div>
         </div>
         <div class="copy-code">
@@ -160,7 +159,8 @@
 
 
 <script>
-import { getAbout,getTrades,beVip,getWhichNumber } from "@src/apis";
+import encrypt from "@src/common/js/encrypt.js"
+import { getAbout,getTrades,beVip,getWhichNumber,SignKey } from "@src/apis";
 import waves from "@src/common/js/waves";
 import storage from "@src/common/js/storage";
 import { setTimeout, clearTimeout } from 'timers';
@@ -170,7 +170,10 @@ export default {
   name: 'home',
   data(){
       return {
-          searchVal:""
+          card:"",
+        //   aboutData:'',
+          times:'',// 时间
+          deposit:'' // 押金
       }
   },
   components: {
@@ -182,7 +185,7 @@ export default {
         if(haveTrades){
             this.$nextTick(()=>{
                 this.$router.push({ name: 'history', params: { 
-                    card: this.searchVal
+                    card: this.card
                 }})
             })
         }
@@ -190,14 +193,17 @@ export default {
       // 查询并成为会员
       async searchBeVip(){
         let _this = this;
-        let searchVal=this.searchVal;
+        let card=this.card;
         let haveTrades = await this.haveTrades();// 是否有退还记录
         if(haveTrades&&haveTrades.tradeList.buyLists&&haveTrades.tradeList.buyLists.length>0){
             if(!haveTrades.tradeList.member){
                  // 没有注册过会员的可注册会员,注册过的就不用了
-                await beVip()({
-                    card:searchVal,
+                let sendData = encrypt.EncryptObj({
+                    card:card,
                     membership:true
+                },['card']);
+                await beVip()({
+                   ...sendData
                 })
             }
             this.$toast(`该号码已成功注册为会员`);
@@ -205,17 +211,20 @@ export default {
             let _time = setTimeout(()=>{
                 clearTimeout(_time)
                 this.$router.push({ name: 'history', params: { 
-                    card: this.searchVal 
+                    card: this.card 
                 }})
             },2000)
         }
       },
        // 检测输入的是手机号还是银行卡
       async getWhichNumber(){
-        let card = this.searchVal;
+        let card = this.card;
         return new Promise(function(resolve, reject){
+            let sendData = encrypt.EncryptObj({
+                card:card,
+            },['card']);
             getWhichNumber()({
-                card:card
+                ...sendData
             }).then(res=>{
                 if(res.code===0&&res.result){
                     resolve(res.result)
@@ -227,10 +236,13 @@ export default {
       },
       //如果有退还记录才可以进行接下来的操作
       haveTrades(){
-        let searchVal=this.searchVal;
+        let card=this.card;
         return new Promise(function(resolve, reject){
+            let sendData = encrypt.EncryptObj({
+                card:card,
+            },['card']);
             getTrades()({
-                card:searchVal
+               ...sendData
             }).then(res=>{
                 let data = res.tradeList.buyLists;
                 if(data&&data.length>0){
@@ -244,7 +256,14 @@ export default {
       // 租用还款条款
       getAbout(){
           getAbout()().then(res=>{
-              console.log(res);
+              if(res.code==0){
+                //   this.aboutData=res.defaultList;
+                  if(res.defaultList.length>0){
+                      let data = res.defaultList;
+                      this.times=data[0].setValue
+                      this.deposit=data[1].setValue
+                  }
+              }
           })
       }
   },

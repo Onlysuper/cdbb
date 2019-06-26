@@ -40,6 +40,7 @@
 
 
 <script>
+import encrypt from "@src/common/js/encrypt.js"
 import waves from "@src/common/js/waves";
 import validator from "@src/common/js/validator.js"
 import { getCheckCode,addPhone } from "@src/apis";
@@ -48,13 +49,13 @@ import { setTimeout } from 'timers';
 import { mapState, mapActions } from "vuex";
 export default {
   directives:{waves},
-  name: 'addcard',
+  name: 'addphone',
   data(){
       return {
         formData:{
           card:this.$route.params.card,// 卡号
-          code:'',// 验证码
-          phone:''// 手机号码或者邮箱
+          phone:'',// 手机号码或者邮箱
+          code:''// 验证码
         } 
       }
   },
@@ -77,8 +78,12 @@ export default {
         return false;
       }
       this.$refs.TimerBtn.timer();
+      console.log(this.formData);
+      let sendData = encrypt.EncryptObj({
+        phone:this.formData.phone
+      },['phone']);
       getCheckCode()({ 
-         phone:this.formData.phone
+        ...sendData
       }).then(res => {
         this.$refs.TimerBtn.disabled = true;
         this.$refs.TimerBtn.timer();
@@ -90,8 +95,9 @@ export default {
       });
     },
     addPhone(){
+      let sendData = encrypt.EncryptObj(this.formData,['card','phone','code']);
       addPhone()({
-        ...this.formData
+        ...sendData
       }).then(res=>{
         if(res.code==0){
           this.$toast.success("手机号添加成功！");

@@ -192,11 +192,10 @@
   @import url(../static/sass/history.scss);
 </style>
 <script>
-// import { Tab, Tabs } from 'vant'
+import encrypt from "@src/common/js/encrypt.js"
 import { mapState, mapActions } from "vuex";
 import waves from "@src/common/js/waves";
-import { getTrades,beVip,getWhichNumber } from "@src/apis";
-// import InfiniteLoading from 'vue-infinite-loading';
+import { getTrades,beVip,getWhichNumber,SignKey } from "@src/apis";
 export default {
   directives:{waves},
   name: 'history',
@@ -290,8 +289,11 @@ export default {
       //如果有退还记录才可以进行接下来的操作
       haveTrades(){
         return new Promise((resolve, reject)=>{
+            let sendData = encrypt.EncryptObj({
+                card:this.card,
+            },['card']);
             getTrades()({
-                card:this.card
+                ...sendData
             }).then(res=>{
                 let data = res.tradeList.buyLists;
                 if(data&&data.length>0){
@@ -351,14 +353,15 @@ export default {
                         //没有手机号 进入手机号银行双卡绑定
                         this.$router.push({ name: 'addcardphone', params: { 
                          card:card,
-                         hasPhone:false
+                         hasPhone:false,
                         }})
                     }
                 }else{
                     // 查询的是手机号,直接进入手机号绑卡
                     this.$router.push({ name: 'addcard', params: { 
                       card:card,
-                      hasPhone:true
+                      hasPhone:true,
+                      phone:getWhichNumber.phone||card,
                     }})
                 }
             }
@@ -370,8 +373,11 @@ export default {
       async getWhichNumber(){
         let card = this.card;
         return new Promise(function(resolve, reject){
+            let sendData = encrypt.EncryptObj({
+                card:card,
+            },['card']);
             getWhichNumber()({
-                card:card
+                ...sendData
             }).then(res=>{
                 if(res.code===0&&res.result){
                     resolve(res.result)
@@ -389,9 +395,12 @@ export default {
                 // console.log(haveTrades.tradeList);
                 if(!haveTrades.tradeList.member){
                     // 没有注册过会员的可注册会员,注册过的就不用了
+                    let sendData = encrypt.EncryptObj({
+                       card:this.card,
+                       membership:true
+                    },['card']);
                     await beVip()({
-                        card:this.card,
-                        membership:true
+                        ...sendData
                     })
                 }
                 this.$toast.success(`该号码已是会员`);
@@ -463,6 +472,9 @@ export default {
             if(this.dayTime){
                 sendData['dayTime']=this.dayTime+'';
             }
+            sendData = encrypt.EncryptObj({
+                ...sendData
+            },['card']);
            return await getTrades()(sendData).then(res=>{
                 // console.log(res);
                 if(res.code==0){

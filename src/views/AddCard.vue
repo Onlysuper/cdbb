@@ -42,6 +42,7 @@
 
 
 <script>
+import encrypt from "@src/common/js/encrypt.js"
 import { addCard } from "@src/apis";
 import waves from "@src/common/js/waves";
 import { mapState, mapActions } from "vuex";
@@ -51,12 +52,11 @@ export default {
        return {
             formData:{
                 card:this.$route.params.card,// 查询的卡号或者手机号
-                // code:'',// 验证码
-                hasPhone:this.$route.params.hasPhone,// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
+                phone:this.$route.params.phone,// 手机号码或者邮箱
                 newCard:'',// 新添加的银行卡卡号
-                phone:this.$route.params.card,// 手机号码或者邮箱
                 validityDate:'',// 银行卡有效期
-                cvv:'' //卡背面CVV号
+                cvv:'', //卡背面CVV号
+                hasPhone:this.$route.params.hasPhone// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
             } 
         }
     },
@@ -68,8 +68,10 @@ export default {
          'CHANGE_KEEPALIVES'
         ]),
         addCard(){
+            let sendData = encrypt.EncryptObj(this.formData,
+            ['card','phone','newCard','validityDate','cvv']);
             addCard()({
-                ...this.formData
+                ...sendData
             }).then(res=>{
                 if(res.code==0){
                     this.$toast.success("银行卡添加成功!");
@@ -78,7 +80,7 @@ export default {
                         this.$router.replace({ name: 'history', params: { 
                               card: this.formData.card
                         }})
-                    },2000)
+                    },1000)
                 }
             })
         }

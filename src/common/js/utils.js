@@ -25,7 +25,7 @@ export default {
             return c.toFixed(2)
     },
      // 得到对象里面的部分属性组成心得对象
-     pickObj(obj = {}, arr) {
+    pickObj(obj = {}, arr) {
         if (obj) {
             return arr.reduce(
                 (iter, val) => (val in obj && (iter[val] = obj[val]), iter),

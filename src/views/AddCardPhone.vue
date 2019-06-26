@@ -63,13 +63,14 @@ export default {
   data(){
     return {
       formData:{
+         // card+"#"+phone+"#"+newCard+"#"+validityDate+"#"+cvv+"#"+hasPhone
         card:this.$route.params.card,// 查询的卡号或者手机号
-        code:'',// 验证码
-        hasPhone:this.$route.params.hasPhone,// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
-        newCard:'',// 新添加的银行卡卡号
         phone:'',// 手机号码或者邮箱
+        newCard:'',// 新添加的银行卡卡号
         validityDate:'',// 银行卡有效期
-        cvv:'' //卡背面CVV号
+        cvv:'', //卡背面CVV号
+        hasPhone:this.$route.params.hasPhone,// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
+        code:''// 验证码
       } 
     }
   },
@@ -96,8 +97,11 @@ export default {
         return false;
       }
       this.$refs.TimerBtn.timer();
+      let sendData = encrypt.EncryptObj({
+          phone:this.formData.phone
+       },['phone']);
       getCheckCode()({ 
-         phone:this.formData.phone
+         ...sendData
       }).then(res => {
         this.$refs.TimerBtn.disabled = true;
         this.$refs.TimerBtn.timer();
@@ -110,24 +114,6 @@ export default {
     },
     // 添加银行卡
     addCard(){
-      // console.log(this.formData);
-      // console.log(encrypt.Encrypt);
-     
-      // let EncryptData = encrypt.Encrypt(utils.pickObj(this.formDatam,['card','']),'zFzFcomTransKey1')
-      let EncryptData = encrypt.Encrypt({
-        card:this.formData.card,// 查询的卡号或者手机号
-        code:this.formData.code,// 验证码
-        hasPhone:this.formData.hasPhone,// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
-        newCard:this.formData.newCard,// 新添加的银行卡卡号
-        phone:this.formData.phone,// 手机号码或者邮箱
-        validityDate:this.formData.validityDate,// 银行卡有效期
-        cvv:this.formData.cvv //卡背面CVV号
-      },'zFzFcomTransKey1')
-      let sendData={
-        EncryptData:EncryptData
-      }
-      console.log(sendData);
-      return false;
       let phone = this.formData.phone;
       let newCard = this.formData.newCard;
       if (!(validator.phoneNumber.test(phone))&&!(validator.email.test(phone))) {
@@ -137,8 +123,13 @@ export default {
         this.$toast("请输入正确的银行卡号!");
         return false;
       }
+
+      // card+"#"+phone+"#"+newCard+"#"+validityDate+"#"+cvv+"#"+hasPhone
+      
+      let sendData = encrypt.EncryptObj(this.formData,
+      ['card','phone','newCard','validityDate','cvv']);
       addCard()({
-        ...this.formData
+        ...sendData
       }).then(res=>{
         if(res.code==0){
           this.$toast.success("银行卡添加成功!");

@@ -40,9 +40,8 @@ module.exports = {
     },
     productionSourceMap: false,
     configureWebpack: (config) => {
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV === 'production'||process.env.NODE_ENV === 'productiontest') {
             // 为生产环境修改配置...
-            config.mode = 'production'
             return {
                 plugins: [
                     new CompressionWebpackPlugin({
