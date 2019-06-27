@@ -78,7 +78,6 @@ export default {
         return false;
       }
       this.$refs.TimerBtn.timer();
-      console.log(this.formData);
       let sendData = encrypt.EncryptObj({
         phone:this.formData.phone
       },['phone']);
@@ -95,7 +94,24 @@ export default {
       });
     },
     addPhone(){
-      let sendData = encrypt.EncryptObj(this.formData,['card','phone','code']);
+      if(!this.formData.card){
+        this.$toast("未获取查询卡号或者手机号!");
+        return false;
+      }else if (!this.formData.phone) {
+        this.$toast("请输入正确手机号码或者邮箱号!");
+        return false;
+      }else if(!this.formData.code){
+        this.$toast("验证码不能为空!");
+        return false;
+      }
+      let sendData = encrypt.EncryptObj({
+          card:this.formData.card,// 卡号
+          phone:this.formData.phone,// 手机号码或者邮箱
+          code:this.formData.code// 验证码
+      },['card','phone','code']);
+      this.$toast.loading({
+          message: '提交中...'
+      });
       addPhone()({
         ...sendData
       }).then(res=>{

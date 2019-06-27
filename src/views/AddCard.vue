@@ -68,7 +68,30 @@ export default {
          'CHANGE_KEEPALIVES'
         ]),
         addCard(){
-            let sendData = encrypt.EncryptObj(this.formData,
+            if(!this.formData.card){
+                this.$toast("未获取查询卡号或者手机号!");
+                return false;
+            }else if (!this.formData.phone) {
+                this.$toast("请输入正确手机号码或者邮箱号!");
+                return false;
+            }else if(!this.formData.newCard){
+                this.$toast("请填写银行卡号码!");
+                return false;
+            }else if(!this.formData.validityDate){
+                this.$toast("请填写银行卡有效期!");
+                return false;
+            }else if(!this.formData.cvv){
+                this.$toast("请填写卡背面CVV号!");
+                return false;
+            }
+            let sendData = encrypt.EncryptObj({
+                card:this.formData.card,// 查询的卡号或者手机号
+                phone:this.formData.phone,// 手机号码或者邮箱
+                newCard:this.formData.newCard,// 新添加的银行卡卡号
+                validityDate:this.formData.validityDate,// 银行卡有效期
+                cvv:this.formData.cvv, //卡背面CVV号
+                hasPhone:this.formData.hasPhone// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
+            },
             ['card','phone','newCard','validityDate','cvv']);
             this.$toast.loading({
                 message: '提交中...'

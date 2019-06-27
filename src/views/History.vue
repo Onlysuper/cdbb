@@ -206,8 +206,7 @@ export default {
   data(){
       return {
         dayTime:'',
-        card :this.$route.params.card,
-        // card :'13233334444',
+        card :'6225768616893580',
         page: 1,
         list: [],
         infiniteId: +new Date(),
