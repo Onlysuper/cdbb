@@ -206,9 +206,9 @@ export default {
                 await beVip()({
                    ...sendData
                 })
-                this.$toast(`恭喜，您已成功註冊為會員! 將為您跳轉到列表`);
+                this.$toast(`恭喜，您已成功註冊為會員! 跳轉到列表中`);
             }else{
-                this.$toast(`您好，您當前已是會員！將為您跳轉到列表`);
+                this.$toast(`您好，您當前已是會員！跳轉到列表中`);
             }
             let _time = setTimeout(()=>{
                 clearTimeout(_time)
