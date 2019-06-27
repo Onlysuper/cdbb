@@ -6,7 +6,7 @@
                 <li>
                     <div class="label">押金金額</div>
                     <div class="content">
-                        {{details.ppriceYajin}}
+                        {{details.ppriceYajin | moneyFormatCN(true)}}
                     </div>
                 </li>
                 <li>

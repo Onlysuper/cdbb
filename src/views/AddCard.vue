@@ -39,28 +39,43 @@
   @import url(../static/sass/base.scss);
   @import url(../static/sass/formstyle.scss);
 </style>
-
-
 <script>
+import storage from "@src/common/js/storage.js"
+import { mapState, mapActions } from "vuex";
 import encrypt from "@src/common/js/encrypt.js"
 import { addCard } from "@src/apis";
 import waves from "@src/common/js/waves";
-import { mapState, mapActions } from "vuex";
+let queryData= storage.getStorage('queryData')?JSON.parse(storage.getStorage('queryData')):{};
 export default {
     directives:{waves},
     data(){
        return {
             formData:{
-                card:this.$route.params.card,// 查询的卡号或者手机号
-                phone:this.$route.params.phone,// 手机号码或者邮箱
+                card:this.$route.params.card || queryData.card,// 查询的卡号或者手机号
+                phone:this.$route.params.phone|| queryData.phone,// 手机号码或者邮箱
                 newCard:'',// 新添加的银行卡卡号
                 validityDate:'',// 银行卡有效期
                 cvv:'', //卡背面CVV号
-                hasPhone:this.$route.params.hasPhone// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
+                hasPhone:this.$route.params.hasPhone|| queryData.hasPhone// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
             } 
         }
     },
     name: 'addcard',
+    computed: {
+        ...mapState({
+            QUERY_DATA: state => state.QUERY_DATA,
+        })
+    },
+    created(){
+            // this.formData={
+            //     card:this.$route.params.card || this.QUERY_DATA.card,// 查询的卡号或者手机号
+            //     phone:this.$route.params.phone,// 手机号码或者邮箱
+            //     newCard:'',// 新添加的银行卡卡号
+            //     validityDate:'',// 银行卡有效期
+            //     cvv:'', //卡背面CVV号
+            //     hasPhone:this.$route.params.hasPhone// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
+            // } 
+    },
     components: {
     },
     methods:{

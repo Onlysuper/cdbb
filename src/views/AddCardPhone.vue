@@ -50,6 +50,7 @@
 
 
 <script>
+import storage from "@src/common/js/storage.js"
 import encrypt from "@src/common/js/encrypt.js"
 import utils from "@src/common/js/utils.js"
 import validator from "@src/common/js/validator.js"
@@ -57,18 +58,19 @@ import TimerBtn from "@src/components/TimerBtn"
 import { getCheckCode,addCard } from "@src/apis";
 import waves from "@src/common/js/waves";
 import { mapState, mapActions } from "vuex";
+let queryData= storage.getStorage('queryData')?JSON.parse(storage.getStorage('queryData')):{};
 export default {
   directives:{waves},
   name: 'addcardphone',
   data(){
     return {
       formData:{
-        card:this.$route.params.card,// 查询的卡号或者手机号
+        card:this.$route.params.card||queryData.card,// 查询的卡号或者手机号
         phone:'',// 手机号码或者邮箱
         newCard:'',// 新添加的银行卡卡号
         validityDate:'',// 银行卡有效期
         cvv:'', //卡背面CVV号
-        hasPhone:this.$route.params.hasPhone,// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
+        hasPhone:this.$route.params.hasPhone||queryData.hasPhone,// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
         code:''// 验证码
       } 
     }

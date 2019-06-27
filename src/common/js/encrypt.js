@@ -21,7 +21,7 @@ export default {
         // return encryptResult.toString();
         return encryptResult.toString();
     },
-    //     加密对象处理
+        // 加密对象处理
     EncryptObj(obj = {}, arr){
         let newobj = {
             sign:[]
@@ -43,4 +43,5 @@ export default {
         newobj['sign']=this.Encrypt(newobj['sign'].join("#"),SignKey);
         return newobj;
     }
+
 }

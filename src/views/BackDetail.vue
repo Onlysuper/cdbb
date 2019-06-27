@@ -5,7 +5,7 @@
             <ul>
                 <li>
                     <div class="label">押金金額</div>
-                    <div class="content">{{details.ppriceYajin |moneyFormatCN(true)}}</div>
+                    <div class="content">{{details.ppriceYajin | moneyFormatCN(true)}}</div>
                 </li>
                 <li>
                     <div class="label">退還金額</div>

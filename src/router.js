@@ -2,12 +2,7 @@ import Vue from 'vue'
 import store from './store';
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import History from './views/History.vue'
-import BackDetail from './views/BackDetail.vue'
-import RentDetail from './views/RentDetail.vue'
-import AddCard from './views/AddCard.vue'
-import AddPhone from './views/AddPhone.vue'
-import AddCardPhone from './views/AddCardPhone.vue'
+import storage from "@src/common/js/storage.js"
 
 Vue.use(Router)
 const routerObj={

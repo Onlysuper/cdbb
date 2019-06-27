@@ -192,8 +192,9 @@
   @import url(../static/sass/history.scss);
 </style>
 <script>
-import encrypt from "@src/common/js/encrypt.js"
+import storage from "@src/common/js/storage.js"
 import { mapState, mapActions } from "vuex";
+import encrypt from "@src/common/js/encrypt.js"
 import waves from "@src/common/js/waves";
 import { getTrades,beVip,getWhichNumber,SignKey } from "@src/apis";
 export default {
@@ -206,7 +207,7 @@ export default {
   data(){
       return {
         dayTime:'',
-        card :'6225768616893580',
+        card:this.$route.params.card,
         page: 1,
         list: [],
         infiniteId: +new Date(),
@@ -246,7 +247,8 @@ export default {
   },
   methods:{
         ...mapActions([
-         'CHANGE_KEEPALIVES'
+         'CHANGE_KEEPALIVES',
+         'CHANGE_QUERY'
         ]),
          // 开始搜索
         searchHandle(dayTime){
@@ -297,6 +299,8 @@ export default {
                 let data = res.tradeList.buyLists;
                 if(data&&data.length>0){
                     resolve(res);
+                }else{
+                     this.$toast('没有该号码的退还记录~');
                 }
             }).catch(err=>{
                 resolve(false);
@@ -314,9 +318,11 @@ export default {
                 if(getWhichNumber.card!=getWhichNumber.phone){
                     // 查询的是卡号
                      if(getWhichNumber.hasPhone!='true'){
-                        this.$router.push({ name: 'addphone', params: { 
-                            card:card
-                        }})
+                        let queryData ={
+                             card:card
+                        }
+                        storage.saveStorage('queryData',JSON.stringify(queryData))
+                        this.$router.push({ name: 'addphone', params:queryData})
                      }else{
                         // 查询的是手机号,直接进入手机号绑卡
                         _this.$toast('该手机号已经添加过了');
@@ -343,25 +349,31 @@ export default {
                     // 查询的是卡号
                     if(getWhichNumber.hasPhone=='true'){
                         // 有手机号 进入手机号绑卡
-                        this.$router.push({ name: 'addcard', params: { 
+                        let queryData={ 
                          card:card,
                          phone:getWhichNumber.phone,
                          hasPhone:true
-                        }})
+                        }
+                        storage.saveStorage('queryData',JSON.stringify(queryData))
+                        this.$router.push({ name: 'addcard', params: queryData})
                     }else{
                         //没有手机号 进入手机号银行双卡绑定
-                        this.$router.push({ name: 'addcardphone', params: { 
+                        let queryData={
                          card:card,
                          hasPhone:false,
-                        }})
+                        }
+                        this.CHANGE_QUERY(queryData);
+                        this.$router.push({ name: 'addcardphone', params: queryData})
                     }
                 }else{
                     // 查询的是手机号,直接进入手机号绑卡
-                    this.$router.push({ name: 'addcard', params: { 
-                      card:card,
-                      hasPhone:true,
-                      phone:getWhichNumber.phone||card,
-                    }})
+                    let queryData={
+                        card:card,
+                        hasPhone:true,
+                        phone:getWhichNumber.phone||card,
+                    }
+                    storage.saveStorage('queryData',JSON.stringify(queryData))
+                    this.$router.push({ name: 'addcard', params: queryData})
                 }
             }
           }else{
@@ -391,7 +403,6 @@ export default {
           if(card){
             let haveTrades = await this.haveTrades();
             if(haveTrades){ // 有退还记录的才会有接下来的操作
-                // console.log(haveTrades.tradeList);
                 if(!haveTrades.tradeList.member){
                     // 没有注册过会员的可注册会员,注册过的就不用了
                     let sendData = encrypt.EncryptObj({
@@ -421,20 +432,6 @@ export default {
                 card:this.card
             }})
           }
-        //   if(obj.preturnTime){
-        //       // 退还详情
-        //     this.$router.push({ name: 'backdetail', params: { 
-        //         orderId: obj.porderID,
-        //         card:this.card
-        //     }})
-        //   }else{
-        //     //   console.log('这里赛');
-        //       // 租用详情
-        //     this.$router.push({ name: 'rentdetail', params: { 
-        //         orderId: obj.porderID,
-        //         card:this.card
-        //     }})
-        //   }
          
       },
       // 加载数据
@@ -490,10 +487,12 @@ export default {
                 )
             })
         },
-       
+  },
+  activated(){
+    storage.removeStorage('queryData');
   },
   created(){
-
+    storage.removeStorage('queryData');
   }
 }
 </script>

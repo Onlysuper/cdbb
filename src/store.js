@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     KEEPALIVES:[''],
-    SEARCHVAL:'',
+    QUERY_DATA:{},// 搜索的内容
   },
   mutations: {
     // 缓存页面列表
@@ -14,9 +14,9 @@ export default new Vuex.Store({
       // console.log(val);
       state.KEEPALIVES=val
     },
-    CHANGE_SEARCHVAL (state,val) {
+    CHANGE_QUERY (state,val) { // 缓存搜索的手机号或者银行卡号
       // console.log(val);
-      state.SEARCHVAL=val
+      state.QUERY_DATA=val
     }
   },
   actions: {
@@ -24,8 +24,8 @@ export default new Vuex.Store({
     CHANGE_KEEPALIVES (context,val) {
       context.commit('CHANGE_KEEPALIVES',val)
     },
-    CHANGE_SEARCHVAL (context,val) {
-      context.commit('CHANGE_SEARCHVAL',val)
+    CHANGE_QUERY (context,val) {
+      context.commit('CHANGE_QUERY',val)
     }
   }
 })

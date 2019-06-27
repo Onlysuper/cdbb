@@ -40,6 +40,7 @@
 
 
 <script>
+import storage from "@src/common/js/storage.js"
 import encrypt from "@src/common/js/encrypt.js"
 import waves from "@src/common/js/waves";
 import validator from "@src/common/js/validator.js"
@@ -47,13 +48,14 @@ import { getCheckCode,addPhone } from "@src/apis";
 import TimerBtn from "@src/components/TimerBtn"
 import { setTimeout } from 'timers';
 import { mapState, mapActions } from "vuex";
+let queryData= storage.getStorage('queryData')?JSON.parse(storage.getStorage('queryData')):{};
 export default {
   directives:{waves},
   name: 'addphone',
   data(){
       return {
         formData:{
-          card:this.$route.params.card,// 卡号
+          card:this.$route.params.card||queryData.card,// 卡号
           phone:'',// 手机号码或者邮箱
           code:''// 验证码
         } 
