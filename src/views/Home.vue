@@ -31,14 +31,14 @@
         <div class="clause">
             <div class="m-label">租用還回條款</div>
             <div class="content">
-                    1、租用时，扣可退押金{{deposit}}元<br/>
+                    1、租用时，扣可退預授權{{deposit}}元<br/>
                     2、租金为：{{times}}元/小时，不足1小时以1小时收费<br/>
-                    3、租时算法：成功扣取可退回押金时计算<br/>
+                    3、租时算法：成功扣取可退回預授權时计算<br/>
                     4、小票或明细在公司网站或微信公众号查询<br/>
-                    5、押金会在还回送电宝宝时，扣取租金把余额退回<br/>
-                    6、成为会员，可以从成为会员那天连续七天免费享受租用送电宝宝，租用中需扣{{deposit}}元押金，还时退押金！<br/>
-                    7、如有问题：请电852-68882022查询<br/>
-                    8、实际使用中的租金及押金，以实际店铺收取为准<br/>
+                    5、預授權会在还回送电宝宝时，扣取租金把余额退回<br/>
+                    6、成为会员，可以从成为会员那天连续七天免费享受租用送电宝宝，租用中需扣{{deposit}}元預授權，还时退預授權！<br/>
+                    7、如有问题：请电{{phoneNumber}}查询<br/>
+                    8、实际使用中的租金及預授權，以实际店铺收取为准<br/>
                     9、最终解释权，归公司所有！<br/>
             </div>
         </div>
@@ -173,7 +173,8 @@ export default {
           card:"",
         //   aboutData:'',
           times:'',// 时间
-          deposit:'' // 押金
+          deposit:'', // 預授權
+          phoneNumber:''//电话号码
       }
   },
   components: {
@@ -205,15 +206,17 @@ export default {
                 await beVip()({
                    ...sendData
                 })
+                this.$toast(`恭喜，您已成功註冊為會員! 將為您跳轉到列表`);
+            }else{
+                this.$toast(`您好，您當前已是會員！將為您跳轉到列表`);
             }
-            this.$toast(`该号码已成功注册为会员`);
-
             let _time = setTimeout(()=>{
                 clearTimeout(_time)
                 this.$router.push({ name: 'history', params: { 
-                    card: this.card 
+                    card: this.card,
+                    registerVip:true
                 }})
-            },2000)
+            },1500)
         }
       },
        // 检测输入的是手机号还是银行卡
@@ -260,8 +263,9 @@ export default {
                 //   this.aboutData=res.defaultList;
                   if(res.defaultList.length>0){
                       let data = res.defaultList;
-                      this.times=data[0].setValue
-                      this.deposit=data[1].setValue
+                      this.times=data[0].setValue;
+                      this.deposit=data[1].setValue;
+                      this.phoneNumber=data[2].setValue;
                   }
               }
           })

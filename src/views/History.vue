@@ -208,6 +208,7 @@ export default {
       return {
         dayTime:'',
         card:this.$route.params.card,
+        registerVip:this.$route.params.registerVip,
         page: 1,
         list: [],
         infiniteId: +new Date(),

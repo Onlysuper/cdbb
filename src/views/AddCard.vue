@@ -121,7 +121,7 @@ export default {
                         this.$router.replace({ name: 'history', params: { 
                               card: this.formData.card
                         }})
-                    },1000)
+                    },1500)
                 }
             })
         }
