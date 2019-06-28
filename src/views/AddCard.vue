@@ -5,7 +5,7 @@
                 <div class="m-label">查詢手機號</div>
                 <div class="item">
                     <div class="input-box no-back">
-                      {{formData.card}}
+                      {{formData.phone||formData.card}}
                     </div>
                 </div>
             </div>
@@ -67,14 +67,7 @@ export default {
         })
     },
     created(){
-            // this.formData={
-            //     card:this.$route.params.card || this.QUERY_DATA.card,// 查询的卡号或者手机号
-            //     phone:this.$route.params.phone,// 手机号码或者邮箱
-            //     newCard:'',// 新添加的银行卡卡号
-            //     validityDate:'',// 银行卡有效期
-            //     cvv:'', //卡背面CVV号
-            //     hasPhone:this.$route.params.hasPhone// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
-            // } 
+
     },
     components: {
     },
@@ -105,7 +98,7 @@ export default {
                 newCard:this.formData.newCard,// 新添加的银行卡卡号
                 validityDate:this.formData.validityDate,// 银行卡有效期
                 cvv:this.formData.cvv, //卡背面CVV号
-                hasPhone:this.formData.hasPhone// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
+                hasPhone:(this.formData.hasPhone=='TRUE')// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
             },
             ['card','phone','newCard','validityDate','cvv']);
             this.$toast.loading({

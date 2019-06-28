@@ -76,8 +76,6 @@ export default {
     }
   },
   created(){
-    // this.$set(this.formData,'card',this.$route.params.card);
-    // this.$set(this.formData,'hasPhone',this.$route.params.hasPhone);
   },
   components: {
       TimerBtn
@@ -149,7 +147,7 @@ export default {
         newCard:this.formData.newCard,// 新添加的银行卡卡号
         validityDate:this.formData.validityDate,// 银行卡有效期
         cvv:this.formData.cvv, //卡背面CVV号
-        hasPhone:this.formData.hasPhone,// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
+        hasPhone:(this.formData.hasPhone=='TRUE'),// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
         code:this.formData.code// 验证码
       },
       ['card','phone','newCard','validityDate','cvv']);

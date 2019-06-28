@@ -362,26 +362,30 @@ export default {
                         if(getWhichNumber.hasPhone=='true'){
                             // 有手机号 进入手机号绑卡
                             let queryData={ 
-                            card:card,
-                            phone:getWhichNumber.phone,
-                            hasPhone:true
+                                card:card, 
+                                phone:getWhichNumber.phone,
+                                hasPhone:'TRUE'
                             }
                             storage.saveStorage('queryData',JSON.stringify(queryData))
-                            this.$router.push({ name: 'addcard', params: queryData})
+                            this.$nextTick(()=>{
+                                 this.$router.push({ name: 'addcard', params: queryData})
+                            })
                         }else{
                             //没有手机号 进入手机号银行双卡绑定
                             let queryData={
-                            card:card,
-                            hasPhone:false,
+                                card:card,
+                                hasPhone:'FALSE',
                             }
                             this.CHANGE_QUERY(queryData);
-                            this.$router.push({ name: 'addcardphone', params: queryData})
+                            this.$nextTick(()=>{
+                                this.$router.push({ name: 'addcardphone', params: queryData})
+                            })
                         }
                     }else{
                         // 查询的是手机号,直接进入手机号绑卡
                         let queryData={
                             card:card,
-                            hasPhone:true,
+                            hasPhone:'TRUE',
                             phone:getWhichNumber.phone||card,
                         }
                         storage.saveStorage('queryData',JSON.stringify(queryData))
