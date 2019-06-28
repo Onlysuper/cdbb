@@ -180,10 +180,15 @@ export default {
   components: {
   },
   methods:{
+        ...mapActions([
+         'CHANGE_HOME_TRADES'
+        ]),
       // 查询
       async searchHandle(){
         let haveTrades = await this.haveTrades();
-        if(haveTrades){
+        if(haveTrades&&haveTrades.code==0&&haveTrades.tradeList.buyLists){
+            let data = haveTrades.tradeList.buyLists;
+            this.CHANGE_HOME_TRADES(data);
             this.$nextTick(()=>{
                 this.$router.push({ name: 'history', params: { 
                     card: this.card
@@ -210,6 +215,8 @@ export default {
             }else{
                 this.$toast(`您好，您當前已是會員！跳轉到列表中`);
             }
+            let data = haveTrades.tradeList.buyLists;
+            this.CHANGE_HOME_TRADES(data);
             let _time = setTimeout(()=>{
                 clearTimeout(_time)
                 this.$router.push({ name: 'history', params: { 

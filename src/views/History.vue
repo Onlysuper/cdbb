@@ -154,14 +154,8 @@
                                                 </ul>
                                             </div>
                                         </template>
-                                        
                                         <!-- 查看退还详情end -->
                                     </div>
-                                    
-                                        <!-- <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" ref="infiniteLoading">
-                                                <div slot="no-more" class="no-more">已加载全部内容</div>
-                                                <div slot="no-results">当前内容为空</div>
-                                        </infinite-loading> -->
                                 </div>
                   </scroller>
         </div>
@@ -197,6 +191,7 @@ import { mapState, mapActions } from "vuex";
 import encrypt from "@src/common/js/encrypt.js"
 import waves from "@src/common/js/waves";
 import { getTrades,beVip,getWhichNumber,SignKey } from "@src/apis";
+import { setTimeout } from 'timers';
 export default {
   directives:{waves},
   name: 'history',
@@ -238,6 +233,10 @@ export default {
       }
   },
   computed:{
+        ...mapState({
+            // 首页获取来的数据列表
+            HOME_TRADES: state => state.HOME_TRADES,
+        }),
      tipText(){
           if(this.dayTime){
                return this.tips.find(item=>item.code==this.dayTime)['label']
@@ -249,11 +248,11 @@ export default {
   methods:{
         ...mapActions([
          'CHANGE_KEEPALIVES',
-         'CHANGE_QUERY'
+         'CHANGE_QUERY',
+         'CHANGE_HOME_TRADES'
         ]),
          // 开始搜索
         searchHandle(dayTime){
-            // console.log('开始搜索');
             this.page=1;
             this.dayTime = dayTime;
             this.allLoaded=false;
@@ -261,167 +260,183 @@ export default {
             this.$refs.loadmore.finishInfinite(false);
         },
         refresh(done) {
-            // console.log('下拉刷新');
             this.allLoaded = false;
             this.getTradesHandle().then(data=>{
-                    setTimeout(() => {
-                        this.list=[...data];
-                        done();
-                        this.isAllLoaded([...data])
-                }, 500);
+                this.list=[...data];
+                this.isAllLoaded([...data])
+                setTimeout(() => {
+                    done()
+                })
             })
         },
         infinite(done) {
-            // console.log('上拉加载')
             if(this.allLoaded){
-                done(true)
+                done(true);
+                return 
+            }
+            let HOME_TRADES = this.HOME_TRADES;
+            if(HOME_TRADES.length>0){
+                setTimeout(()=>{
+                    this.list=[...HOME_TRADES];
+                    this.isAllLoaded([...HOME_TRADES]);
+                    this.CHANGE_HOME_TRADES([])
+                    setTimeout(() => {
+                        done()
+                    })
+                },200)
             }else{
-               this.getTradesHandle().then(data=>{
-                     setTimeout(() => {
-                            this.list=[...data];
-                            done();
-                            this.isAllLoaded([...data])
-                    }, 500);
+                this.getTradesHandle().then(data=>{
+                    this.list=[...data];
+                    this.isAllLoaded([...data]);
+                    this.CHANGE_HOME_TRADES([])
+                    setTimeout(() => {
+                        done()
+                    })
                 })
             }
+           
         },
         isAllLoaded(data) {
             this.allLoaded = true;
-         },
+        },
       //如果有退还记录才可以进行接下来的操作
-      haveTrades(){
-        return new Promise((resolve, reject)=>{
-            let sendData = encrypt.EncryptObj({
-                card:this.card,
-            },['card']);
-            getTrades()({
-                ...sendData
-            }).then(res=>{
-                let data = res.tradeList.buyLists;
-                if(data&&data.length>0){
-                    resolve(res);
-                }else{
-                     this.$toast('没有该号码的退还记录~');
-                }
-            }).catch(err=>{
-                resolve(false);
-            })
-         });
-      },
-      // 添加手机号
-      async addPhone(){
-          let _this = this;
-          let card = this.card;
-          let haveTrades = await this.haveTrades();
-          if(card){
-            if(haveTrades){ // 有退还记录的才会有接下来的操作
-              let getWhichNumber = await this.getWhichNumber();
-                if(getWhichNumber.card!=getWhichNumber.phone){
-                    // 查询的是卡号
-                     if(getWhichNumber.hasPhone!='true'){
-                        let queryData ={
-                             card:card
+        haveTrades(){
+            return new Promise((resolve, reject)=>{
+                let sendData = encrypt.EncryptObj({
+                    card:this.card,
+                },['card']);
+                getTrades()({
+                    ...sendData
+                }).then(res=>{
+                    let data = res.tradeList.buyLists;
+                    if(data&&data.length>0){
+                        resolve(res);
+                    }else{
+                        this.$toast('没有该号码的退还记录~');
+                    }
+                }).catch(err=>{
+                    resolve(false);
+                })
+            });
+        },
+        // 添加手机号
+        async addPhone(){
+            let _this = this;
+            let card = this.card;
+            let haveTrades = await this.haveTrades();
+            if(card){
+                if(haveTrades){ // 有退还记录的才会有接下来的操作
+                let getWhichNumber = await this.getWhichNumber();
+                    if(getWhichNumber.card!=getWhichNumber.phone){
+                        // 查询的是卡号
+                        if(getWhichNumber.hasPhone!='true'){
+                            let queryData ={
+                                card:card
+                            }
+                            storage.saveStorage('queryData',JSON.stringify(queryData))
+                            this.$router.push({ name: 'addphone', params:queryData})
+                        }else{
+                            // 查询的是手机号,直接进入手机号绑卡
+                            _this.$toast('该手机号已经添加过了');
                         }
-                        storage.saveStorage('queryData',JSON.stringify(queryData))
-                        this.$router.push({ name: 'addphone', params:queryData})
-                     }else{
+                    
+                    }else{
                         // 查询的是手机号,直接进入手机号绑卡
                         _this.$toast('该手机号已经添加过了');
-                     }
-                   
-                }else{
-                    // 查询的是手机号,直接进入手机号绑卡
-                    _this.$toast('该手机号已经添加过了');
+                    }
                 }
+            }else{
+                _this.$toast('请先输入搜索关键字');
             }
-          }else{
-            _this.$toast('请先输入搜索关键字');
-          }
-      },
-      // 添加银行卡
-      async addBankCard(){
-          let _this = this;
-          let card = this.card;
-          let haveTrades = await this.haveTrades();
-          if(card){
-            if(haveTrades){ // 有退还记录的才会有接下来的操作
-                let getWhichNumber = await this.getWhichNumber();
-                if(getWhichNumber.card!=getWhichNumber.phone){
-                    // 查询的是卡号
-                    if(getWhichNumber.hasPhone=='true'){
-                        // 有手机号 进入手机号绑卡
-                        let queryData={ 
-                         card:card,
-                         phone:getWhichNumber.phone,
-                         hasPhone:true
+        },
+        // 添加银行卡
+        async addBankCard(){
+            let _this = this;
+            let card = this.card;
+            let haveTrades = await this.haveTrades();
+            if(card){
+                if(haveTrades){ // 有退还记录的才会有接下来的操作
+                    let getWhichNumber = await this.getWhichNumber();
+                    if(getWhichNumber.card!=getWhichNumber.phone){
+                        // 查询的是卡号
+                        if(getWhichNumber.hasPhone=='true'){
+                            // 有手机号 进入手机号绑卡
+                            let queryData={ 
+                            card:card,
+                            phone:getWhichNumber.phone,
+                            hasPhone:true
+                            }
+                            storage.saveStorage('queryData',JSON.stringify(queryData))
+                            this.$router.push({ name: 'addcard', params: queryData})
+                        }else{
+                            //没有手机号 进入手机号银行双卡绑定
+                            let queryData={
+                            card:card,
+                            hasPhone:false,
+                            }
+                            this.CHANGE_QUERY(queryData);
+                            this.$router.push({ name: 'addcardphone', params: queryData})
+                        }
+                    }else{
+                        // 查询的是手机号,直接进入手机号绑卡
+                        let queryData={
+                            card:card,
+                            hasPhone:true,
+                            phone:getWhichNumber.phone||card,
                         }
                         storage.saveStorage('queryData',JSON.stringify(queryData))
                         this.$router.push({ name: 'addcard', params: queryData})
-                    }else{
-                        //没有手机号 进入手机号银行双卡绑定
-                        let queryData={
-                         card:card,
-                         hasPhone:false,
-                        }
-                        this.CHANGE_QUERY(queryData);
-                        this.$router.push({ name: 'addcardphone', params: queryData})
                     }
-                }else{
-                    // 查询的是手机号,直接进入手机号绑卡
-                    let queryData={
-                        card:card,
-                        hasPhone:true,
-                        phone:getWhichNumber.phone||card,
-                    }
-                    storage.saveStorage('queryData',JSON.stringify(queryData))
-                    this.$router.push({ name: 'addcard', params: queryData})
                 }
+            }else{
+                _this.$toast('请先输入搜索关键字');
             }
-          }else{
-              _this.$toast('请先输入搜索关键字');
-          }
-      },
-      // 检测输入的是手机号还是银行卡
-      async getWhichNumber(){
-        let card = this.card;
-        return new Promise(function(resolve, reject){
-            let sendData = encrypt.EncryptObj({
-                card:card,
-            },['card']);
-            getWhichNumber()({
-                ...sendData
-            }).then(res=>{
-                if(res.code===0&&res.result){
-                    resolve(res.result)
-                }
-            })
-        });
-      },
+        },
+        // 检测输入的是手机号还是银行卡
+        async getWhichNumber(){
+            let card = this.card;
+            return new Promise(function(resolve, reject){
+                let sendData = encrypt.EncryptObj({
+                    card:card,
+                },['card']);
+                getWhichNumber()({
+                    ...sendData
+                }).then(res=>{
+                    if(res.code===0&&res.result){
+                        resolve(res.result)
+                    }
+                })
+            });
+        },
       // 成为会员
-     async beVip(){
-          let _this = this;
-          let card = this.card;
-          if(card){
-            let haveTrades = await this.haveTrades();
-            if(haveTrades){ // 有退还记录的才会有接下来的操作
-                if(!haveTrades.tradeList.member){
-                    // 没有注册过会员的可注册会员,注册过的就不用了
-                    let sendData = encrypt.EncryptObj({
-                       card:this.card,
-                       membership:true
-                    },['card']);
-                    await beVip()({
-                        ...sendData
-                    })
+        async beVip(){
+            let _this = this;
+            let card = this.card;
+            if(card){
+                let haveTrades = await this.haveTrades();
+                if(haveTrades){ // 有退还记录的才会有接下来的操作
+                    if(!haveTrades.tradeList.member){
+                        // 没有注册过会员的可注册会员,注册过的就不用了
+                        let sendData = encrypt.EncryptObj({
+                        card:this.card,
+                        membership:true
+                        },['card']);
+                        let beVip = await beVip()({
+                            ...sendData
+                        })
+                        console.log(beVip);
+                        this.$toast(`恭喜，您已成功註冊為會員! 跳轉到列表中`);
+                    }else{
+                        this.$toast.success(`该号码已是会员`);
+                    }
+                    
                 }
-                this.$toast.success(`该号码已是会员`);
+            }else{
+                _this.$toast('请先输入搜索关键字');
             }
-          }else{
-            _this.$toast('请先输入搜索关键字');
-          }
-      },
+        },
       // 查看详情
-      detailHandle(obj){
+        detailHandle(obj){
           if(obj.page=='rent'){
             this.$router.push({ name: 'rentdetail', params: { 
                 orderId: obj.porderID,
@@ -433,34 +448,6 @@ export default {
                 card:this.card
             }})
           }
-         
-      },
-      // 加载数据
-        infiniteHandler($state) {
-            if($state){
-                if(this.card){
-                        this.getTradesHandle().then(data=>{
-                                // console.log(data);
-                                //  分页效果
-                                // if (data.length>0) { 
-                                //     this.page += 1;
-                                //     this.list.push(...data);
-                                //     $state.loaded();
-                                // }
-                                // else {
-                                //     $state.complete();
-                                // }
-                                //         // 不分页效果
-                                this.list={...data};
-                                $state.loaded();
-                                $state.complete();
-                        })
-                }else{
-                    this.list={};
-                    $state.loaded();
-                    $state.complete();
-                }
-            }
         },
         async getTradesHandle(){
             let sendData ={
@@ -472,7 +459,7 @@ export default {
             sendData = encrypt.EncryptObj({
                 ...sendData
             },['card']);
-           return await getTrades()(sendData).then(res=>{
+            return await getTrades()(sendData).then(res=>{
                 // console.log(res);
                 if(res.code==0){
                     let data = res.tradeList.buyLists;
@@ -487,13 +474,13 @@ export default {
                     []
                 )
             })
-        },
-  },
-  activated(){
-    storage.removeStorage('queryData');
-  },
-  created(){
-    storage.removeStorage('queryData');
-  }
+        }
+    },
+    activated(){
+        storage.removeStorage('queryData');
+    },
+    created(){
+        storage.removeStorage('queryData');
+    }
 }
 </script>
