@@ -2,10 +2,19 @@
   <div class="page history-page">
        <div class="search-top-fixed search-top" ref="search-top">
             <div class="search-box">
-                <van-field clearable v-model="card"  type="number" placeholder="请输入用于租用的手机号/银行卡号进行查询" />
+                <!-- <input-num  :value="card" @input="onInput"></input-num> -->
+                <van-field 
+                clearable type='tel' 
+                v-model="card" 
+                @input="inputNum" 
+                placeholder="请输入用于租用的手机号/银行卡号进行查询" 
+                />
                 <img @click="searchHandle()" class="icon" src="../static/img/icon_search@3x.png" alt="">
             </div>
+          
        </div>
+       
+        
         <!-- <div class="search-place"></div> -->
          <div class="search-top" ref="search-tip-grop">
                     <div class="search-tip">
@@ -186,6 +195,7 @@
   @import url(../static/sass/history.scss);
 </style>
 <script>
+import InputNum from "@src/components/InputNum"
 import storage from "@src/common/js/storage.js"
 import { mapState, mapActions } from "vuex";
 import encrypt from "@src/common/js/encrypt.js"
@@ -196,11 +206,13 @@ export default {
   directives:{waves},
   name: 'history',
   components: {
+      InputNum
     //   InfiniteLoading
     // Tab, Tabs
   },
   data(){
       return {
+        numVisible:true,
         dayTime:'',
         card:this.$route.params.card,
         registerVip:this.$route.params.registerVip,
@@ -251,6 +263,14 @@ export default {
          'CHANGE_QUERY',
          'CHANGE_HOME_TRADES'
         ]),
+         onInput(ev){
+          this.card=ev
+        },
+        inputNum(ev){
+            let oldvalue= ev;
+            let newval = oldvalue.replace(/\s/g, '').replace(/[^\d]/g, '');
+            this.card=newval;
+        },
          // 开始搜索
         searchHandle(dayTime){
             this.page=1;
