@@ -27,7 +27,7 @@
                         <van-tabs :swipeable='true' title-active-color="#f6f6f6" background="#f6f6f6" :border='false' :ellipsis='false' :line-width='0'>
                         <van-tab v-for="item in tips" :key="item.code">
                                 <div slot="title">
-                                    <div @click="searchHandle(item.code)" :class="['tip',{selected1:dayTime==item.code?true:false}]">{{item.label}}</div>
+                                    <div @click="searchHandle(item.code)" :class="['tip',{selected:dayTime==item.code?true:false}]">{{item.label}}</div>
                                 </div>
                             </van-tab>
                         </van-tabs>
