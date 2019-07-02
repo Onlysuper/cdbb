@@ -19,7 +19,7 @@
                     銀行卡號/手機號
                 </div>
                 <div class="item">
-                    <van-field clearable v-model="card"  type="tel" placeholder="请输入用于租用的卡号或是手机号" />
+                    <van-field @input="inputNum" clearable v-model="card"  type="tel" placeholder="请输入用于租用的卡号或是手机号" />
                 </div>
             </div>
             <div class="operation-box">
@@ -211,9 +211,9 @@ export default {
                 await beVip()({
                    ...sendData
                 })
-                this.$toast(`恭喜，您已成功註冊為會員! 跳轉到列表中`);
+                this.$toast(`恭喜，您已成功註冊為會員! 即将跳转列表页`);
             }else{
-                this.$toast(`您好，您當前已是會員！跳轉到列表中`);
+                this.$toast(`您好，您當前已是會員！即将跳转列表页`);
             }
             let data = haveTrades.tradeList.buyLists;
             this.CHANGE_HOME_TRADES(data);
@@ -223,7 +223,7 @@ export default {
                     card: this.card,
                     registerVip:true
                 }})
-            },1500)
+            },1200)
         }
       },
        // 检测输入的是手机号还是银行卡
@@ -276,6 +276,11 @@ export default {
                   }
               }
           })
+      },
+      inputNum(ev){
+           let oldvalue= ev;
+           let newval = oldvalue.replace(/\s/g, '').replace(/[^\d]/g, '');
+           this.card=newval;
       }
   },
   created(){

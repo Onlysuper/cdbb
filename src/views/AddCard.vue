@@ -14,7 +14,7 @@
                 <div class="label">銀行卡號</div>
                 <div class="item">
                      <div class="input-box">
-                         <van-field clearable v-model="formData.newCard"  type="tel" placeholder="請輸入銀行卡號" />
+                         <van-field @input="inputNum($event,'newCard')" clearable v-model="formData.newCard"  type="tel" placeholder="請輸入銀行卡號" />
                      </div>
                 </div>
             </div>
@@ -22,10 +22,10 @@
                 <div class="label">有效期及CVV号</div>
                  <div class="item">
                      <div class="input-box">
-                         <van-field clearable v-model="formData.validityDate"  type="tel" placeholder="月/年（如0623）" />
+                         <van-field @input="inputNum($event,'validityDate')" clearable v-model="formData.validityDate"  type="tel" placeholder="月/年（如0623）" />
                      </div>
                       <div class="input-box item-s">
-                           <van-field clearable v-model="formData.cvv"  type="tel" placeholder="卡背面CVV号" />
+                           <van-field @input="inputNum($event,'cvv')" clearable v-model="formData.cvv"  type="tel" placeholder="卡背面CVV号" />
                      </div>
                 </div>
             </div>
@@ -75,6 +75,11 @@ export default {
         ...mapActions([
          'CHANGE_KEEPALIVES'
         ]),
+        inputNum(ev,attr){
+           let oldvalue= ev;
+           let newval = oldvalue.replace(/\s/g, '').replace(/[^\d]/g, '');
+           this.formData[attr]=newval;
+        },
         addCard(){
             if(!this.formData.card){
                 this.$toast("未获取查询卡号或者手机号!");
@@ -101,6 +106,8 @@ export default {
                 hasPhone:(this.formData.hasPhone=='TRUE')// 如果查询的是卡号，当前卡号是否有手机号,如果查询的是手机号，传true
             },
             ['card','phone','newCard','validityDate','cvv']);
+            // console.log('这里',sendData);
+            // return false;
             this.$toast.loading({
                 message: '提交中...'
             });

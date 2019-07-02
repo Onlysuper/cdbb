@@ -260,7 +260,6 @@ export default {
   methods:{
         ...mapActions([
          'CHANGE_KEEPALIVES',
-         'CHANGE_QUERY',
          'CHANGE_HOME_TRADES'
         ]),
          onInput(ev){
@@ -396,7 +395,7 @@ export default {
                                 card:card,
                                 hasPhone:'FALSE',
                             }
-                            this.CHANGE_QUERY(queryData);
+                            storage.saveStorage('queryData',JSON.stringify(queryData))
                             this.$nextTick(()=>{
                                 this.$router.push({ name: 'addcardphone', params: queryData})
                             })
@@ -448,8 +447,7 @@ export default {
                         let beVip = await beVip()({
                             ...sendData
                         })
-                        console.log(beVip);
-                        this.$toast(`恭喜，您已成功註冊為會員! 跳轉到列表中`);
+                        this.$toast(`恭喜，您已成功註冊為會員!`);
                     }else{
                         this.$toast.success(`该号码已是会员`);
                     }

@@ -5,7 +5,7 @@
                 <div class="m-label">手機號/郵箱</div>
                 <div class="item">
                     <div class="input-box">
-                          <van-field ref="phone" clearable v-model="formData.phone"  type="text" placeholder="请输入手机号/电邮作为查询号" />
+                          <van-field ref="phone" clearable v-model="formData.phone"  type="email" placeholder="请输入手机号/电邮作为查询号" />
                     </div>
                 </div>
             </div>
@@ -13,7 +13,7 @@
                 <div class="label">驗證碼</div>
                 <div class="item">
                     <div class="input-box">
-                         <van-field clearable v-model="formData.code"  type="tel" placeholder="請輸入驗證碼" />
+                         <van-field @input="inputNum($event,'code')" clearable v-model="formData.code"  type="tel" placeholder="請輸入驗證碼" />
                     </div>
                     <TimerBtn ref="TimerBtn" :text="'獲取驗證碼'" :time="60" :cb="sendCode"></TimerBtn>
                 </div>
@@ -22,7 +22,7 @@
                 <div class="label">銀行卡號</div>
                 <div class="item">
                      <div class="input-box">
-                        <van-field clearable v-model="formData.newCard"  type="tel" placeholder="請輸入銀行卡號" />
+                        <van-field @input="inputNum($event,'newCard')" clearable v-model="formData.newCard"  type="tel" placeholder="請輸入銀行卡號" />
                      </div>
                 </div>
             </div>
@@ -30,10 +30,10 @@
                 <div class="label">有效期及CVV号</div>
                 <div class="item">
                      <div class="input-box">
-                         <van-field clearable v-model="formData.validityDate"  type="tel" placeholder="月/年（如0623）" />
+                         <van-field @input="inputNum($event,'validityDate')" clearable v-model="formData.validityDate"  type="tel" placeholder="月/年（如0623）" />
                      </div>
                       <div class="input-box item-s">
-                           <van-field clearable v-model="formData.cvv"  type="tel" placeholder="卡背面CVV号" />
+                           <van-field  @input="inputNum($event,'cvv')" clearable v-model="formData.cvv"  type="tel" placeholder="卡背面CVV号" />
                      </div>
                 </div>
             </div>
@@ -84,6 +84,11 @@ export default {
     ...mapActions([
       'CHANGE_KEEPALIVES'
     ]),
+    inputNum(ev,attr){
+        let oldvalue= ev;
+        let newval = oldvalue.replace(/\s/g, '').replace(/[^\d]/g, '');
+        this.formData[attr]=newval;
+    },
       //获取验证码
     sendCode() {
       if (

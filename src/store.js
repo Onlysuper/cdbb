@@ -15,9 +15,9 @@ export default new Vuex.Store({
       state.KEEPALIVES=val
     },
     // 缓存搜索的手机号或者银行卡号
-    CHANGE_QUERY (state,val) { 
-      state.QUERY_DATA=val
-    },
+    // CHANGE_QUERY (state,val) { 
+    //   state.QUERY_DATA=val
+    // },
     // 缓存首页搜索出来的数据列表
     CHANGE_HOME_TRADES(state,val){
       state.HOME_TRADES=val
@@ -27,9 +27,9 @@ export default new Vuex.Store({
     CHANGE_KEEPALIVES (context,val) {
       context.commit('CHANGE_KEEPALIVES',val)
     },
-    CHANGE_QUERY (context,val) {
-      context.commit('CHANGE_QUERY',val)
-    },
+    // CHANGE_QUERY (context,val) {
+    //   context.commit('CHANGE_QUERY',val)
+    // },
     CHANGE_HOME_TRADES (context,val) {
       context.commit('CHANGE_HOME_TRADES',val)
     }

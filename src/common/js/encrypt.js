@@ -22,30 +22,29 @@ export default {
         return encryptResult.toString();
     },
         // 加密对象处理
-    // EncryptObj(obj = {}, arr){
-    //     let newobj = {
-    //         sign:[]
-    //     };
-    //     if (obj) {
-    //         for(var i in obj){
-    //             if(arr.includes(i)){
-    //                 let replaceSpace = this.Encrypt(obj[i],SignKey);
-    //                 newobj[i]=replaceSpace;
-    //                 newobj['sign'].push(replaceSpace);
-    //             }else{
-    //                 newobj[i]=obj[i]+'';
-    //                 if(i=='hasPhone'){
-    //                     newobj['sign'].push(obj[i]+'');
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     newobj['sign']=this.Encrypt(newobj['sign'].join("#"),SignKey);
-    //     return newobj;
-    // }
-    // 未加密
     EncryptObj(obj = {}, arr){
-        return obj
+        let newobj = {
+            sign:[]
+        };
+        if (obj) {
+            for(var i in obj){
+                if(arr.includes(i)){
+                    let replaceSpace = this.Encrypt(obj[i],SignKey);
+                    newobj[i]=replaceSpace;
+                    newobj['sign'].push(replaceSpace);
+                }else{
+                    newobj[i]=obj[i]+'';
+                    if(i=='hasPhone'){
+                        newobj['sign'].push(obj[i]+'');
+                    }
+                }
+            }
+        }
+        newobj['sign']=this.Encrypt(newobj['sign'].join("#"),SignKey);
+        return newobj;
     }
-
+    // 未加密
+    // EncryptObj(obj = {}, arr){
+    //     return obj
+    // }
 }
