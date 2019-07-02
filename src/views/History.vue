@@ -444,10 +444,9 @@ export default {
                         card:this.card,
                         membership:true
                         },['card']);
-                        let beVip = await beVip()({
-                            ...sendData
+                        beVip()(sendData).then(res=>{
+                            this.$toast(`恭喜，您已成功註冊為會員!`);
                         })
-                        this.$toast(`恭喜，您已成功註冊為會員!`);
                     }else{
                         this.$toast.success(`该号码已是会员`);
                     }

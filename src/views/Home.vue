@@ -209,7 +209,7 @@ export default {
                     membership:true
                 },['card']);
                 await beVip()({
-                   ...sendData
+                ...sendData
                 })
                 this.$toast(`恭喜，您已成功註冊為會員! 即将跳转列表页`);
             }else{
