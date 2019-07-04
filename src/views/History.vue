@@ -15,8 +15,9 @@
        </div>
        
         
-        <!-- <div class="search-place"></div> -->
-         <div class="search-top" ref="search-tip-grop">
+        <!-- <div v-if="y>100" class="search-place"></div> -->
+         <!-- <div class="search-top search-tip-fixed" :style="{position:y>100?'absolute':'relative','z-index':y>100?'-1':'100'}" ref="search-tip-grop"> -->
+         <div :class="['search-top','search-tip-fixed',{hide:y>100&&deriction=='down'}]"  ref="search-tip-grop">
                     <div class="search-tip">
                         {{tipText}}租用退还记录
                     </div>
@@ -32,6 +33,9 @@
                             </van-tab>
                         </van-tabs>
                     </div>
+                    <!-- <div>
+                        {{x+'--'+y}}
+                    </div> -->
                     <div class="sort-box">
                         <div @click="orderSearch(true)" class="tip">按租借時間顯示</div>
                         <div @click="orderSearch(false)" class="tip">按歸還時間顯示</div>
@@ -211,11 +215,10 @@ export default {
   name: 'history',
   components: {
       InputNum
-    //   InfiniteLoading
-    // Tab, Tabs
   },
   data(){
       return {
+        deriction:"down",
         numVisible:true,
         dayTime:'',
         card:this.$route.params.card,
@@ -225,6 +228,9 @@ export default {
         list: [],
         infiniteId: +new Date(),
         allLoaded:false,
+        x:0,
+        y:0,
+        timer:"",
         tips:[
         // {
         //     label:'全部',
@@ -516,6 +522,27 @@ export default {
     },
     created(){
         storage.removeStorage('queryData');
+    },
+    beforeDestroy() {
+      clearInterval(this.timer)
+    },
+    mounted(){
+        this.timer = setInterval(() => {
+        let beforeY = this.y;
+        let {left, top} = this.$refs.loadmore.getPosition()
+            this.x = left
+            this.y = top
+            if(this.y>10){
+                if(this.y>beforeY){
+                    console.log('向下')
+                    this.deriction='down'
+                }else if(this.y<beforeY){
+                    console.log('向上')
+                     this.deriction='top'
+                }
+            }
+           
+      }, 50)
     }
 }
 </script>

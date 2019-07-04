@@ -13,6 +13,9 @@ body{
 .van-tabs__nav--line{
     padding-bottom: 0 !important;
 }
+.search-place{
+    height: .42rem;
+}
 .history-page{
     background: #f6f6f6;
     padding: 0;
@@ -29,6 +32,7 @@ body{
 .search-top{
     padding: 0 .15rem 0;
     background:  #f6f6f6;
+
 }
 .search-top-fixed{
     padding: .1rem .15rem;
@@ -36,6 +40,14 @@ body{
     left: 0;
     right: 0;
     z-index: 100;
+}
+.search-tip-fixed{
+    overflow: hidden;
+    transition: height 1s linear 2s;
+}
+.search-tip-fixed.hide{
+    overflow: hidden;
+    height: 0;
 }
 .search-top-fixed .search-box{
     display: flex;
@@ -70,8 +82,6 @@ body{
 .search-tip{
     color:#BDBDBD;
     font-size: .12rem;
-}
-.search-tip-grop{
 }
 
 .search-tip-grop .tip{
