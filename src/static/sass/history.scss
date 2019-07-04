@@ -51,8 +51,7 @@ body{
 .search-top-fixed .search-box .van-cell{
     padding: 0;
 }
-.search-place{
-}
+
 .search-top .search-box input{
     flex: 1;
     height: .32rem;
@@ -224,4 +223,15 @@ body{
     color: #fff;
     text-align: center;
     line-height: .28rem;
+}
+.sort-box{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: .1rem;
+    color: rgba(92,148,239);
+}
+.sort-box .tip{
+    margin-right: .1rem;
+    font-size: .14rem;
+
 }

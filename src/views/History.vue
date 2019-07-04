@@ -32,6 +32,10 @@
                             </van-tab>
                         </van-tabs>
                     </div>
+                    <div class="sort-box">
+                        <div @click="orderSearch(true)" class="tip">按租借時間顯示</div>
+                        <div @click="orderSearch(false)" class="tip">按歸還時間顯示</div>
+                    </div>
                 </div>
         <div class="main-container">
                  <scroller style="background:tranparent;"
@@ -215,6 +219,7 @@ export default {
         numVisible:true,
         dayTime:'',
         card:this.$route.params.card,
+        orderByBorrowTime:true, // 排序
         registerVip:this.$route.params.registerVip,
         page: 1,
         list: [],
@@ -269,6 +274,14 @@ export default {
             let oldvalue= ev;
             let newval = oldvalue.replace(/\s/g, '').replace(/[^\d]/g, '');
             this.card=newval;
+        },
+        // 排序搜索
+        orderSearch(orderByBorrowTime){
+            this.page=1;
+            this.orderByBorrowTime = orderByBorrowTime;
+            this.allLoaded=false;
+            this.list=[];
+            this.$refs.loadmore.finishInfinite(false);
         },
          // 开始搜索
         searchHandle(dayTime){
@@ -472,7 +485,8 @@ export default {
         },
         async getTradesHandle(){
             let sendData ={
-                card:this.card
+                card:this.card,
+                orderByBorrowTime:this.orderByBorrowTime,
             };
             if(this.dayTime){
                 sendData['dayTime']=this.dayTime+'';

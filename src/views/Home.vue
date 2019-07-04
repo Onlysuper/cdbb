@@ -7,7 +7,7 @@
                 <img src="../static/img/logo.jpg" alt="">
             </div>
             <h2 class="title">
-                    充電寶寶租用還回記錄查詢
+                    送電寶寶租用還回記錄查詢
             </h2>
             <div class="describe">
                     您好！感謝您租用送電寶寶！您可以通過卡號或者手機號查看您所有的租用、還回明細！成為會員，還可以首七天免費使用送電寶寶！
