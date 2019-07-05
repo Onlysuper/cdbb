@@ -19,7 +19,7 @@
                     銀行卡號/手機號
                 </div>
                 <div class="item">
-                    <van-field @input="inputNum" clearable v-model="card"  type="tel" placeholder="请输入用于租用的卡号或是手机号" />
+                    <van-field @input="inputNum" clearable v-model="card"  type="tel" placeholder="請輸入用於租用的卡號或者手機號" />
                 </div>
             </div>
             <div class="operation-box">
@@ -31,15 +31,15 @@
         <div class="clause">
             <div class="m-label">租用還回條款</div>
             <div class="content">
-                    1、租用时，扣可退押金{{deposit}}元<br/>
-                    2、租金为：{{times}}元/小时，不足1小时以1小时收费<br/>
-                    3、租时算法：成功扣取可退回押金时计算<br/>
-                    4、小票或明细在公司网站或微信公众号查询<br/>
-                    5、押金会在还回送电宝宝时，扣取租金把余额退回<br/>
-                    6、成为会员，可以从成为会员那天连续七天免费享受租用送电宝宝，租用中需扣{{deposit}}元押金，还时退押金！<br/>
-                    7、如有问题：请电{{phoneNumber}}查询<br/>
-                    8、实际使用中的租金及押金，以实际店铺收取为准<br/>
-                    9、最终解释权，归公司所有！<br/>
+                    1、租用時，扣可退押金{{deposit}}元<br/>
+                    2、租金為：{{times}}元/小時，不足1小時以1小時收費<br/>
+                    3、租時算法：成功扣取可退回押金時計算<br/>
+                    4、小票或明細在公司網站或微信公眾號查詢<br/>
+                    5、押金會在還回送電寶寶時，扣取租金把余額退回<br/>
+                    6、成為會員，可以從成為那天連續七天免費享受租用送電寶寶，租用中需扣{{deposit}}元押金，還時退押金！<br/>
+                    7、如有問題：請電{{phoneNumber}}查詢<br/>
+                    8、實際使用中的租金及押金，以實際店鋪收取為準<br/>
+                    9、最終解釋權，歸公司所有！<br/>
             </div>
         </div>
         <div class="copy-code">
