@@ -238,10 +238,13 @@ body{
     display: flex;
     flex-direction: row;
     margin-bottom: .1rem;
-    color: rgba(92,148,239);
+
 }
 .sort-box .tip{
     margin-right: .1rem;
     font-size: .14rem;
-
+    color:#333;
+}
+.sort-box .tip.selected{
+    color:#ea6f48
 }

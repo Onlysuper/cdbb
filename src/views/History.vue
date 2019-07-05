@@ -33,12 +33,9 @@
                             </van-tab>
                         </van-tabs>
                     </div>
-                    <!-- <div>
-                        {{x+'--'+y}}
-                    </div> -->
-                    <div class="sort-box">
-                        <div @click="orderSearch(true)" class="tip">按租借時間顯示</div>
-                        <div @click="orderSearch(false)" class="tip">按歸還時間顯示</div>
+                    <div  class="sort-box">
+                        <div v-for="(item,index) in orderTips" :key="index" @click="orderSearch(item.code)" :class="['tip',{selected:orderByBorrowTime==item.code?true:false}]">{{item.label}}</div>
+                       
                     </div>
                 </div>
         <div class="main-container">
@@ -231,11 +228,16 @@ export default {
         x:0,
         y:0,
         timer:"",
+        orderTips:[{
+            label:'按租借時間顯示',
+            code:true
+            },
+            {
+            label:'按歸還時間顯示',
+            code:false
+            }
+        ],
         tips:[
-        // {
-        //     label:'全部',
-        //     code:''
-        // },
         {
             label:'最近7天',
             code:'7'
@@ -534,10 +536,10 @@ export default {
             this.y = top
             if(this.y>10){
                 if(this.y>beforeY){
-                    console.log('向下')
+                    // console.log('向下')
                     this.deriction='down'
                 }else if(this.y<beforeY){
-                    console.log('向上')
+                    // console.log('向上')
                      this.deriction='top'
                 }
             }
