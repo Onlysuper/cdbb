@@ -19,7 +19,7 @@
          <!-- <div class="search-top search-tip-fixed" :style="{position:y>100?'absolute':'relative','z-index':y>100?'-1':'100'}" ref="search-tip-grop"> -->
          <div :class="['search-top','search-tip-fixed',{hide:y>100&&deriction=='down'}]"  ref="search-tip-grop">
                     <div class="search-tip">
-                        {{tipText}}租用退还记录
+                        {{tipText}}租用退還記錄
                     </div>
                         <!-- <div class="search-tip-grop">
                             <div v-for="item in tips" :key="item.code" @click="searchHandle(item.code)" :class="['tip',{selected1:dayTime==item.code?true:false}]">{{item.label}}</div>
@@ -48,7 +48,7 @@
                                         <!-- 查看租用start -->
                                         <template v-if="!(item.preturnTime)">
                                             <div @click="detailHandle({porderID:item.porderID,page:'rent'})" class="item-header">
-                                                查看租用详情
+                                                查看租用詳情
                                                 <img class="icon" src="../static/img/icon_right@3x.png" alt="">
                                             </div>
                                             <div class="item-body">
@@ -88,7 +88,7 @@
                                         <!-- 查看退还详情start -->
                                         <template v-else>
                                              <div @click="detailHandle({porderID:item.porderID,page:'rent'})" class="item-header item-header2">
-                                                查看租用详情
+                                                查看租用詳情
                                                 <img class="icon" src="../static/img/icon_right@3x.png" alt="">
                                             </div>
                                             <div class="item-body">
@@ -124,7 +124,7 @@
                                                 </ul>
                                             </div>
                                             <div @click="detailHandle({porderID:item.porderID,page:'back'})" class="item-header">
-                                                查看退还详情
+                                                查看退還詳情
                                                 <img class="icon" src="../static/img/icon_right@3x.png" alt="">
                                             </div>
                                             <div  class="item-body">
@@ -243,15 +243,15 @@ export default {
             code:'7'
         },
         {
-            label:'最近1个月',
+            label:'最近1個月',
             code:'30'
         },
         {
-            label:'最近2个月',
+            label:'最近2個月',
             code:'60'
         },
         {
-            label:'最近3个月',
+            label:'最近3個月',
             code:'90'
         },
         ]
