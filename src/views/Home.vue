@@ -18,8 +18,8 @@
                     銀行卡號/手機號
                 </div>
                 <div class="item">
-                    <input-num  :value="card" @input="onInput"></input-num>
-                    <!-- <van-field @input="inputNum" clearable v-model="card"  type="tel" placeholder="請輸入用於租用的卡號或者手機號" /> -->
+                    <!-- <input-num  :value="card" @input="onInput"></input-num> -->
+                    <van-field @input="inputNum" clearable v-model="card"  type="tel" placeholder="請輸入用於租用的卡號或者手機號" />
                 </div>
             </div>
             <div class="operation-box">

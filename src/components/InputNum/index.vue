@@ -64,6 +64,18 @@
     margin-top: .1rem;
     right: 0;
     top: 0;
+    animation: blink 1s infinite steps(1, start);
+}
+/*这里设置动画blink*/
+@keyframes blink {
+    0%, 100% {
+        background-color: #000;
+        color: #aaa;
+    }
+    50% {
+        background-color: #bbb; /* not #aaa because it's seem there is Google Chrome bug */
+        color: #000;
+    }
 }
 .input span{
     display: flex;
@@ -102,7 +114,7 @@ export default {
     },
     created(){
         this.currentVal=this.value;
-        this.searchHtml='<span>'+this.value+'</span>'
+        this.searchHtml='<span>'+this.value+'</span><span class="split-line">'
     },
     // computed: {
     //     currentVal(){
