@@ -3,6 +3,7 @@
      <div class="page page-home">
         <div class="search-header">
             <div class="img-box">
+                   <!-- <img src="../static/img/logo.jpg" alt=""> -->
                 <img src="../static/img/logo.jpg" alt="">
             </div>
             <h2 class="title">

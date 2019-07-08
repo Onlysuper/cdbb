@@ -3,13 +3,12 @@
        <div class="search-top-fixed search-top" ref="search-top">
             <div class="search-box">
                 <!-- <input-num  :value="card" @input="onInput"></input-num> -->
-                <!-- <van-field 
+                <van-field 
                 clearable type='tel' 
                 v-model="card" 
                 @input="inputNum" 
                 placeholder="请输入用于租用的手机号/银行卡号进行查询" 
-                /> -->
-                <input-num  :value="card" @input="onInput"></input-num>
+                />
                 <img @click="searchHandle()" class="icon" src="../static/img/icon_search@3x.png" alt="">
             </div>
           

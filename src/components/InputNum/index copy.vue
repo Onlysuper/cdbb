@@ -1,19 +1,32 @@
 <template>
-<div style="width:100%">
-    <div class='input' @click="numVisible = true" placeholder='请输入文字' v-html="searchHtml">
-        <span>
-            <span class="split-line"></span>
-        </span>
+    <div style="width:100%;height:100%;">
+            <!-- <van-field 
+            clearable type='tel' 
+            v-model="currentVal" 
+            :placeholder="placeholder" 
+            readonly
+            @click="numVisible = true"
+            /> -->
+            <div class='input' @click="numVisible = true" placeholder='请输入文字' v-html="searchHtml">
+                <span>
+                    <span class="split-line"></span>
+                </span>
+            </div>
+            <van-popup class="popup" v-model="numVisible" position="bottom" :overlay="false">
+                <!-- <div class="popup-header">
+                    <span class="clear" @click="onClear">清空</span>
+                    <span class="sure" @click="onClose">确定</span>
+                </div> -->
+                <van-number-keyboard
+                :show="numberKeyVisible"
+                extra-key="清空"
+                close-button-text="确定"
+                @input="onInput"
+                @delete="onDelete"
+                @close="onClose"
+                />
+            </van-popup>
     </div>
-    <van-number-keyboard
-    :show="numVisible"
-    extra-key="清空"
-    close-button-text="确定"
-    @input="onInput"
-    @delete="onDelete"
-    @close="onClose"
-    />
-</div>
 </template>
 <style lang="scss">
 .popup-header{
@@ -96,13 +109,8 @@ export default {
     },
     watch:{
         value(value){
-            this.currentVal=value;
-            // this.searchHtml='<span>'+value+'</span>'
+            this.currentVal=value
         }
-    },
-    created(){
-        this.currentVal=this.value;
-        this.searchHtml='<span>'+this.value+'</span>'
     },
     // computed: {
     //     currentVal(){
@@ -112,6 +120,9 @@ export default {
     methods:{
         onInput(key) {
             if (key == "清空") {
+                this.numVisible = false;
+                this.currentVal=this.defautVal;
+                // this.$emit("input","")
                 this.onClear();
                 return false;
             }
