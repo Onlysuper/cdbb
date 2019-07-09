@@ -181,12 +181,12 @@
        <div class="search-footer">
            <div class="m-button">
                 <button v-waves @click="addBankCard" class="button">
-                    添加銀行卡
+                    添加查询银行卡
                 </button>
            </div>
            <div class="split-line"></div>
            <div class="m-button">
-                <button v-waves class="button" @click="addPhone">添加手機號</button>
+                <button v-waves class="button" @click="addPhone">添加查询手机号</button>
            </div>
            <div class="split-line"></div>
           <div class="m-button">
