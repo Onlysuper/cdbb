@@ -59,11 +59,11 @@
                                                     </li>
                                                     <li>
                                                         <div class="label">押金金額:</div>
-                                                        <div class="content">{{item.ppriceYajin |moneyFormatCN(true)}}</div>
+                                                        <div class="content">HK${{item.ppriceYajin |moneyFormatCN(true)}}</div>
                                                     </li>
                                                     <li>
                                                         <div class="label">租金單價:</div>
-                                                        <div class="content">{{item.pprice |moneyFormatCN(true)}}</div>
+                                                        <div class="content">HK${{item.pprice |moneyFormatCN(true)}}</div>
                                                     </li>
                                                     <li>
                                                         <div class="label">電話號碼:</div>
@@ -99,11 +99,11 @@
                                                     </li>
                                                     <li>
                                                         <div class="label">押金金額:</div>
-                                                        <div class="content">{{item.ppriceYajin |moneyFormatCN(true)}}</div>
+                                                        <div class="content">HK${{item.ppriceYajin |moneyFormatCN(true)}}</div>
                                                     </li>
                                                     <li>
                                                         <div class="label">租金單價:</div>
-                                                        <div class="content">{{item.pprice |moneyFormatCN(true)}}</div>
+                                                        <div class="content">HK${{item.pprice |moneyFormatCN(true)}}</div>
                                                     </li>
                                                     <li>
                                                         <div class="label">電話號碼:</div>
@@ -143,19 +143,19 @@
                                                     </li>
                                                     <li>
                                                         <div class="label">租金單價:</div>
-                                                        <div class="content">{{item.pprice |moneyFormatCN(true)}}</div>
+                                                        <div class="content">HK${{item.pprice |moneyFormatCN(true)}}</div>
                                                     </li>
                                                     <li>
                                                         <div class="label">租金:</div>
-                                                        <div class="content">{{item.ppayPrice |moneyFormatCN(true)}}</div>
+                                                        <div class="content">HK${{item.ppayPrice |moneyFormatCN(true)}}</div>
                                                     </li>
                                                     <li>
                                                         <div class="label">押金金額:</div>
-                                                        <div class="content">{{item.ppriceYajin |moneyFormatCN(true)}}</div>
+                                                        <div class="content">HK${{item.ppriceYajin |moneyFormatCN(true)}}</div>
                                                     </li>
                                                     <li>
                                                         <div class="label">退還金額:</div>
-                                                        <div class="content">{{item.repayAmount |moneyFormatCN(true)}}</div>
+                                                        <div class="content">HK${{item.repayAmount |moneyFormatCN(true)}}</div>
                                                     </li>
                                                     <li>
                                                         <div class="label">機櫃號:</div>
