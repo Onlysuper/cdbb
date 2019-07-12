@@ -6,7 +6,7 @@
                 <li>
                     <div class="label">押金金額</div>
                     <div class="content">
-                        {{details.ppriceYajin | moneyFormatCN(true)}}
+                        HK${{details.ppriceYajin | moneyFormatCN(true)}}
                     </div>
                 </li>
                 <li>
@@ -29,7 +29,7 @@
                 </li>
                 <li>
                     <div class="label">租金單價</div>
-                    <div class="content">{{details.pprice |moneyFormatCN(true)}}</div>
+                    <div class="content">HK${{details.pprice |moneyFormatCN(true)}}</div>
                 </li>
                 <li>
                     <div class="label">租用時間</div>
