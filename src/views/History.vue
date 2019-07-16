@@ -176,7 +176,7 @@
       
        <div class="footer-place"></div>
        <div class="vip-tip">
-           首七天免费租借
+           首七天免費租借
        </div>
        <div class="search-footer">
            <div class="m-button">

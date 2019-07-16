@@ -1,8 +1,8 @@
 <!--
- * 发送验证码按钮组件
+ * 發送驗證碼按钮组件
  * 
  * 指定时间参数 time:2
- * 指定文字参数 text : "发送验证码"
+ * 指定文字参数 text : "發送驗證碼"
  * 指定点击事件的回调函数
 -->
 
@@ -37,11 +37,11 @@ export default {
     },
     text: {
       type: String,
-      default: "发送验证码"
+      default: "發送驗證碼"
     },
     textEnd: {
       type: String,
-      default: "重新发送"
+      default: "重新發送"
     }
   },
   methods: {

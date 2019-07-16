@@ -21,7 +21,6 @@
                 <div class="label">驗證碼</div>
                 <div class="item">
                     <div class="input-box">
-                         <!-- <input type="tel" placeholder="請輸入驗證碼"> -->
                           <van-field @input="inputNum($event,'code')" ref="tel" clearable v-model="formData.code"  type="tel" placeholder="請輸入驗證碼" />
                     </div>
                    <TimerBtn ref="TimerBtn" :text="'獲取驗證碼'" :time="60" :cb="sendCode"></TimerBtn>

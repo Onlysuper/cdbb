@@ -2,7 +2,7 @@
     <div class="page addcard-page">
         <div class="m-form-page">
             <van-notice-bar wrapable :scrollable="false">
-            溫馨提示：您添加的銀行卡，是方便您以後用來查詢您過往的租借歸還記錄，而不是用來在本平台交易
+            溫馨提示：您添加的銀行卡，是方便您以後用來查詢您過往的租借歸還記錄，而不是用來在本平臺交易
             </van-notice-bar>
             <!-- <div class="top-tip"> -->
                
@@ -25,13 +25,13 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="label">有效期及CVV号</div>
+                <div class="label">有效期及CVV號</div>
                  <div class="item">
                      <div class="input-box">
                          <van-field @input="inputNum($event,'validityDate')" clearable v-model="formData.validityDate"  type="tel" placeholder="月/年（如0623）" />
                      </div>
                       <div class="input-box item-s">
-                           <van-field @input="inputNum($event,'cvv')" clearable v-model="formData.cvv"  type="tel" placeholder="卡背面CVV号" />
+                           <van-field @input="inputNum($event,'cvv')" clearable v-model="formData.cvv"  type="tel" placeholder="卡背面CVV號" />
                      </div>
                 </div>
             </div>

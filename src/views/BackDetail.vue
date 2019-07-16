@@ -1,7 +1,7 @@
 <template>
    <div class="page backdetail-page">
        <div class="container">
-            <div class="m-header">送电宝宝租借单</div>
+            <div class="m-header">送電寶寶租借單</div>
             <ul>
                 <li>
                     <div class="label">押金金額</div>
