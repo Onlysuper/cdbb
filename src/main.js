@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 // import Vant from 'vant';
 import 'vant/lib/index.css';
+import "./static/sass/base.scss";
 import { Toast,Field,Tab, Tabs,NumberKeyboard,Popup,NoticeBar } from 'vant'
 // import { Toast,Field } from 'vant'
 import mFilter from '@src/common/js/filters';

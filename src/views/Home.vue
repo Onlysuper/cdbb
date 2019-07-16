@@ -49,7 +49,6 @@
   <!-- </div> -->
 </template>
 <style lang="scss">
-  @import url(../static/sass/base.scss);
 .page-home{
     .search-header{
         padding-top:.33rem;
